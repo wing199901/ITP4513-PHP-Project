@@ -3,15 +3,10 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>Login</title>
+	<title>Create Account</title>
 	<link rel="icon" href="favicon.ico" type="image/x-icon" />
 	<link href="css/font.css" rel="stylesheet" type="text/css" />
 	<style>
-		a:active{
-			background-color:#a9c4f5;
-			border: 10px;
-			border-radius: 2px;
-		}
 		h1 {
 			text-align: center;
 		}
@@ -42,9 +37,14 @@
 			border-radius: 5px;
 			width: 400px;
 			padding: 10px;
-			margin: 10px;
-		}
-
+			margin: -5px;
+        }
+        
+        p {
+            text-align: left;
+            margin-left: 45px;
+        }
+/*
 		#tbPwd {
 			margin-bottom: 10px;
 		}
@@ -78,7 +78,7 @@
 		a {
 			color: cornflowerblue;
 			text-decoration: none;
-		}
+		}*/
 	</style>
 </head>
 
@@ -86,11 +86,18 @@
 	<h1><img src="images/gear.png" width=32px> Spare Order System</h1>
 	<div id="main">
 		<form method="POST" action="login.php">
-			<h2>Sign In</h2>
-			<input type="text" name="username" placeholder="DealerID or Email">
-			<input type="text" name="pwd" placeholder="Password" id="tbPwd">
-			<div id="divRemember"><input type="checkbox" id="cbRemember"> Remember Me </div>
-			<div id="divCreate"><a href="createAccount.html">Create Account</a></div>
+            <h2>Create your Dealer Account</h2>
+            <p>Account ID</p>
+            <input type="text" name="username">
+            <p>Your Name</p>
+            <input type="text" name="pwd">
+            <p>Your Name</p>
+            <input type="text" name="tel" placeholder="Phone Number">
+            <p>Your Name</p>
+            <input type="text" name="address" placeholder="Address">
+            <p>Your Name</p>
+            <input type="password" name="pwd" placeholder="Password">
+            
 			<div id="divSubmit"><input type="submit" value="Login" id="login"></div>
 			<br /><br />
 		</form>
