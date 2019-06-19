@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>login_dealer</title>
+	<link rel="icon" href="favicon.ico" type="image/x-icon" />
+	<link href="css/font.css" rel="stylesheet" type="text/css" />
+	<style>
+		body {
+			background-color: white;
+		}
+
+		div {
+			text-align: center;
+			background-color: #F3F3F3;
+			width: 500px;
+			height: auto;
+			margin: 0 auto;
+			border: 3px #F3F3F3 solid;
+			border-radius: 10px;
+			margin-top: 100px;
+		}
+
+		h2 {
+			color: grey
+		}
+
+		input {
+			font-size: 25px;
+			border: 10px;
+			border-radius: 5px;
+			width: 400px;
+			padding: 10px;
+			margin: 10px;
+		}
+
+		#cbRemember {
+			width: 10px;
+			margin: 0px;
+			padding: 0px;
+			size: 0px;
+		}
+
+		p {
+			text-align: left;
+		}
+	</style>
+</head>
+
+<body class=font>
+	<center>
+		<h1><img src="images/gear.png" width=32px> Spare Order System</h1>
+	</center>
+	<div>
+		<form method="POST" action="login.php">
+			<h2>Sign In</h2>
+
+			<input type="text" name="username" placeholder="Username">
+			<input type="text" name="pwd" placeholder="Password">
+			<p><input type="checkbox" id="cbRemember">Remember Me</p>
+			<input type="submit" value="Login"><br />
+			<input type="submit" name="dealer" value="Dealer"><br /><br />
+		</form>
+	</div>
+</body>
+
+</html>
