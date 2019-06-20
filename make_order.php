@@ -4,25 +4,56 @@
 <head>
     <meta charset="UTF-8">
     <title>Make Order</title>
-    <link rel="icon" href="favicon.ico" type="image/x-icon"/>
-    <link href="css/font.css" rel="stylesheet" type="text/css"/>
-    <link href="css/index.css" rel="stylesheet" type="text/css"/>
-    
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <link href="css/font.css" rel="stylesheet" type="text/css" />
+    <link href="css/index.css" rel="stylesheet" type="text/css" />
+
     <style>
-        table{
-            border-collapse: collapse;
-            width:90%;
+        body {
             background-color: #f3f3f3;
         }
-        
-        th,td{
+
+        table {
+            border-collapse: separate;
+            background-color: white;
+            border-radius: 10px;
+            border-spacing: 0;
+        }
+
+        th,
+        td {
             padding: 15px;
             text-align: left;
             border-bottom: 1px solid #ddd;
         }
-        
-        tr:hover{
-            backgrooung-color:#f5f5f5;
+
+        tr:last-child td:first-child{
+            border-bottom-left-radius: 10px;
+        }
+        tr:last-child td:last-child {
+            border-bottom-right-radius: 10px;
+        }
+
+        tr:hover {
+            background-color: #ddd;
+            border-bottom: 1px solid #ddd;
+        }
+
+        tr:first-child tr:hover{
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+
+        tr:last-child tr:hover{
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+        }
+
+        input[type=text] {
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            resize: vertical;
         }
     </style>
 </head>
@@ -49,18 +80,18 @@
     <br>
 
     <?php
-    require_once( 'conn.php' );
+    require_once('conn.php');
     $sql = "SELECT * FROM Part WHERE stockStatus = 1 AND stockQuantity > 0 ";
-    $rs = mysqli_query( $conn, $sql );
+    $rs = mysqli_query($conn, $sql);
 
     echo '<form method="POST" action="$_SERVER[PHP_SELF]">';
-    echo '<table border="1"><tr>
+    echo '<table align="center"><tr>
             <th>Part Number</th><th>Email</th><th>Part Name</th><th>Quantity</th><th>Price</th><th>Status</th><th>Purchase</th>';
-    while ( $rc = mysqli_fetch_assoc( $rs ) )
-        printf( '<tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td><input type="textbox" name="purchase" id="purchase"></td></tr>', $rc[ 'partNumber' ], $rc[ 'email' ], $rc[ 'partName' ], $rc[ 'stockQuantity' ], $rc[ 'stockPrice' ], $rc[ 'stockStatus' ] );
+    while ($rc = mysqli_fetch_assoc($rs))
+        printf('<tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td><input type="text" name="purchase" id="purchase"></td></tr>', $rc['partNumber'], $rc['email'], $rc['partName'], $rc['stockQuantity'], $rc['stockPrice'], $rc['stockStatus']);
     echo '</table><br>Delivery Address:<input type="text" name="Address"><br><input type="submit"><input type="reset"></form>';
-    mysqli_free_result( $rs );
-    mysqli_close( $conn );
+    mysqli_free_result($rs);
+    mysqli_close($conn);
     ?>
 
 </body>
