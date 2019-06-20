@@ -7,62 +7,43 @@
     <link rel="icon" href="favicon.ico" type="image/x-icon" />
     <link href="css/font.css" rel="stylesheet" type="text/css" />
     <link href="css/index.css" rel="stylesheet" type="text/css" />
+    <link href="css/table.css" rel="stylesheet" type="text/css" />
 
     <style>
         body {
             background-color: #f3f3f3;
         }
 
-        table {
-            border-collapse: separate;
-            background-color: white;
-            border-radius: 10px;
-            border-spacing: 0;
-        }
-
-        th,
-        td {
-            padding: 15px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-
-        tr:first-child th:first-child{
-            border-top-left-radius: 10px;
-        }
-
-        tr:first-child th:last-child {
-            border-top-right-radius: 10px;
-        }
-
-        tr:last-child td:first-child{
-            border-bottom-left-radius: 10px;
-        }
-
-        tr:last-child td:last-child {
-            border-bottom-right-radius: 10px;
-        }
-
-        tr:hover {
-            background-color: #ddd;
-            border-bottom: 1px solid #ddd;
-        }
-
-        tr:first-child tr:hover{
-            border-top-left-radius: 10px;
-            border-top-right-radius: 10px;
-        }
-
-        tr:last-child tr:hover{
-            border-bottom-left-radius: 10px;
-            border-bottom-right-radius: 10px;
-        }
-
         input[type=text] {
             padding: 12px;
             border: 1px solid #ccc;
             border-radius: 5px;
-            resize: vertical;
+        }
+
+        input[type=submit] {
+            font-size: 25px;
+            border: 10px;
+            border-radius: 5px;
+            padding: 10px;
+            width: 200px;
+        }
+
+        input[type=reset] {
+            font-size: 25px;
+            border: 10px;
+            border-radius: 5px;
+            padding: 10px;
+            width: 200px;
+        }
+
+        div {
+            text-align: center;
+            width: auto;
+            height: auto;
+        }
+
+        div .submit {
+            float: inherit;
         }
     </style>
 </head>
@@ -94,11 +75,13 @@
     $rs = mysqli_query($conn, $sql);
 
     echo '<form method="POST" action="$_SERVER[PHP_SELF]">';
-    echo '<table align="center"><tr>
+    echo '<div><table align="center"><tr>
             <th>Part Number</th><th>Email</th><th>Part Name</th><th>Quantity</th><th>Price</th><th>Status</th><th>Purchase</th>';
     while ($rc = mysqli_fetch_assoc($rs))
         printf('<tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td><input type="text" name="purchase" id="purchase"></td></tr>', $rc['partNumber'], $rc['email'], $rc['partName'], $rc['stockQuantity'], $rc['stockPrice'], $rc['stockStatus']);
-    echo '</table><br>Delivery Address:<input type="text" name="Address"><br><input type="submit"><input type="reset"></form>';
+    echo '</table><br>
+        <div class="submit">Delivery Address:<input type="text" name="Address">&emsp;
+        <input type="submit">&emsp;<input type="reset"></div></div></form>';
     mysqli_free_result($rs);
     mysqli_close($conn);
     ?>
