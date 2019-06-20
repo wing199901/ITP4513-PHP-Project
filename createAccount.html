@@ -2,106 +2,97 @@
 <html>
 
 <head>
-	<meta charset="UTF-8">
-	<title>Create Account</title>
-	<link rel="icon" href="favicon.ico" type="image/x-icon" />
-	<link href="css/font.css" rel="stylesheet" type="text/css" />
-	<style>
-		h1 {
-			text-align: center;
-		}
-
-		body {
-			background-color: white;
-		}
-
-		#main {
-			text-align: center;
-			background-color: #F3F3F3;
-			width: 500px;
-			height: auto;
-			margin: 0 auto;
-			border: 3px #F3F3F3 solid;
-			border-radius: 10px;
-			margin-top: 100px;
-			padding-bottom: 100px;
-		}
-
-		h2 {
-			color: grey
-		}
-
-		input {
-			font-size: 25px;
-			border: 10px;
-			border-radius: 5px;
-			width: 400px;
-			padding: 10px;
-			margin: -5px;
+    <meta charset="UTF-8">
+    <title>Create Account</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <link href="css/font.css" rel="stylesheet" type="text/css" />
+    <style>
+        h1 {
+            text-align: center;
         }
-        
+
+        body {
+            background-color: white;
+        }
+
+        #main {
+            text-align: center;
+            background-color: #F3F3F3;
+            width: 500px;
+            height: auto;
+            margin: 0 auto;
+            border: 3px #F3F3F3 solid;
+            border-radius: 10px;
+            margin-top: 100px;
+            padding-bottom: 50px;
+        }
+
+        h2 {
+            color: grey
+        }
+
+        input {
+            font-size: 25px;
+            border: 10px;
+            border-radius: 5px;
+            width: 400px;
+            padding: 10px;
+            margin: -5px;
+        }
+
         p {
             text-align: left;
             margin-left: 45px;
         }
-/*
-		#tbPwd {
-			margin-bottom: 10px;
-		}
 
-		#cbRemember {
-			width: auto;
-			margin: 0px;
-			padding: 0px;
-			size: 20px;
-			margin-left: 40px;
-		}
+        #name , #pwd{
+            width: 180px;
+            float: left;
+            margin-left: 40px;
+            margin-bottom: 10px;
+        }
 
-		#login {
+        #tel , #confirmPwd{
+            width: 180px;
+            float: right;
+            margin-right: 40px;
+            margin-bottom: 10px;
+        }
+		#register{
 			width: 120px;
 		}
-
-		#divRemember {
-			float: left;
-		}
-
-		#divCreate {
-			float: right;
-			width: 200px;
-		}
-
 		#divSubmit {
 			float: right;
-			width: 200px;
-		}
-
-		a {
-			color: cornflowerblue;
-			text-decoration: none;
-		}*/
-	</style>
+            width: 200px;
+            margin-top: 15px;
+        }
+        [name=hint]{
+            font-size: 12px;
+        }
+    </style>
 </head>
 
 <body class=font>
-	<h1><img src="images/gear.png" width=32px> Spare Order System</h1>
-	<div id="main">
-		<form method="POST" action="login.php">
+    <h1><img src="images/gear.png" width=32px> Spare Order System</h1>
+    <div id="main">
+        <form method="POST" action="login.php">
             <h2>Create your Dealer Account</h2>
             <p>Account ID</p>
-            <input type="text" name="username">
-            <p>Your Name</p>
-            <input type="text" name="pwd">
-            <p>Your Name</p>
-            <input type="text" name="tel" placeholder="Phone Number">
-            <p>Your Name</p>
-            <input type="text" name="address" placeholder="Address">
-            <p>Your Name</p>
-            <input type="password" name="pwd" placeholder="Password">
-            
-			<div id="divSubmit"><input type="submit" value="Login" id="login"></div>
-			<br /><br />
-		</form>
-	</div>
+            <input type="text" name="accountId" id="accountId">
+            <p name="hint">You can use letters, number&periods</p>
+            <p>Your Name &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Phone Number</p>
+            <input type="text" name="name" id="name">
+            <input type="text" name="tel" id="tel">
+            <p>Address</p>
+            <input type="text" name="address" id="address">
+            <p>Password &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; Confirm</p>
+            <input type="password" name="pwd" id="pwd">
+            <input type="password" name="confirmPwd" id="confirmPwd"><br /><br />
+            <p name="hint">Use 8 or more characters with a mis of letters, numbers & symbols</p>
+            <div id="divSubmit"><input type="submit" value="Register" id="register"></div>
+            <br /><br />
+        </form>
+    </div>
 </body>
 
 </html>
