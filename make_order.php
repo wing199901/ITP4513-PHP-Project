@@ -7,6 +7,24 @@
     <link rel="icon" href="favicon.ico" type="image/x-icon"/>
     <link href="css/font.css" rel="stylesheet" type="text/css"/>
     <link href="css/index.css" rel="stylesheet" type="text/css"/>
+    
+    <style>
+        table{
+            border-collapse: collapse;
+            width:90%;
+            background-color: #f3f3f3;
+        }
+        
+        th,td{
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        tr:hover{
+            backgrooung-color:#f5f5f5;
+        }
+    </style>
 </head>
 
 <body class="font">
