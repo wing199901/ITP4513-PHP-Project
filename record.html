@@ -7,6 +7,58 @@
   <link rel="icon" href="favicon.ico" type="image/x-icon" />
   <link href="css/font.css" rel="stylesheet" type="text/css" />
   <link href="css/index.css" rel="stylesheet" type="text/css" />
+  <link href="css/table.css" rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <style>
+    input[type=text] {
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    input[type=submit] {
+      font-size: 25px;
+      border: 10px;
+      border-radius: 5px;
+      padding: 10px;
+      width: 200px;
+    }
+
+    input[type=reset] {
+      font-size: 25px;
+      border: 10px;
+      border-radius: 5px;
+      padding: 10px;
+      width: 200px;
+    }
+
+    div {
+      text-align: center;
+      width: auto;
+      height: auto;
+    }
+
+    button {
+      padding: 12px;
+      border: 1px solid #f3f3f3;
+      background-color: #f3f3f3;
+      border-radius: 5px;
+      border-left: none;
+      /* Prevent double borders */
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #ccc;
+    }
+
+    ::after {
+      content: "";
+      clear: both;
+      display: table;
+    }
+  </style>
 </head>
 
 <body class="font">
@@ -16,13 +68,41 @@
   <br>
   <ul>
     <li><a href="dealer_index.html">Home</a></li>
-    <li><a href="make_order.html">Make Order</a></li>
+    <li><a href="make_order.php">Make Order</a></li>
     <li><a class="active" href="record.html">Order Record</a></li>
     <li><a href="acc_info.html">Account Info</a></li>
     <li><a href="login.html" onclick="return confirm('Are you sure you want to sign out?')">Log Out</a></li>
-    </div>
-    </li>
   </ul>
+  <br>
+
+  <form method="POST" action="$_SERVER[PHP_SELF]">
+    <div>
+      <input style="margin-left:-500px;" type="text" placeholder="Search Order" name="search" id="search">
+      <button type="submit"><i class="fa fa-search"></i></button><br><br>
+      <table align="center">
+        <tr>
+          <th>Order ID</th>
+          <th>Address</th>
+          <th>Order Date</th>
+          <th>Part Number</th>
+          <th>Quantity</th>
+          <th>Status</th>
+          <th>Amount</th>
+        </tr>
+        <tr>
+          <td><a>%s</a></td>
+          <td>%s</td>
+          <td>%s</td>
+          <td>%s</td>
+          <td>%s</td>
+          <td>%s</td>
+          <td>%s</td>
+        </tr>
+      </table><br>
+    </div>
+  </form>
+
+
 </body>
 
 </html>
