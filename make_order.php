@@ -34,11 +34,15 @@
     require_once( 'conn.php' );
     $sql = "SELECT * FROM Part WHERE stockStatus = 1 AND stockQuantity > 0 ";
     $rs = mysqli_query( $conn, $sql );
+
     echo '<form method="POST" action="$_SERVER[PHP_SELF]">';
     echo '<table border="1"><tr>
-            <th>Part Number</th><th>Email</th><th>Part Name</th><th>Quantity</th><th>Price</th><th>Status</th>';
+            <th>Part Number</th><th>Email</th><th>Part Name</th><th>Quantity</th><th>Price</th><th>Status</th><th>Purchase</th>';
     while ( $rc = mysqli_fetch_assoc( $rs ) )
-        printf( '<tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td</tr>', $rc[ 'partNumber' ], $rc[ 'email' ], $rc[ 'partName' ], $rc[ 'stockQuantity' ], $rc[ 'stockPrice' ], $rc[ 'stockStatus' ] );
+        printf( '<tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td><input type="textbox" name="purchase" id="purchase"></td></tr>', $rc[ 'partNumber' ], $rc[ 'email' ], $rc[ 'partName' ], $rc[ 'stockQuantity' ], $rc[ 'stockPrice' ], $rc[ 'stockStatus' ] );
+    echo '</table><br>Delivery Address:<input type="text" name="Address"><br><input type="submit"><input type="reset"></form>';
+    mysqli_free_result( $rs );
+    mysqli_close( $conn );
     ?>
 
 </body>
