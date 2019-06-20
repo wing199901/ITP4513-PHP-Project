@@ -28,7 +28,7 @@
 			margin: 0 auto;
 			border: 3px #F3F3F3 solid;
 			border-radius: 10px;
-			margin-top: 100px;
+			margin-top: 80px;
 			padding-bottom: 100px;
 		}
 
@@ -45,11 +45,11 @@
 			margin: 10px;
 		}
 
-		#tbPwd {
+		#pwd {
 			margin-bottom: 10px;
 		}
 
-		#cbRemember {
+		#remember {
 			width: auto;
 			margin: 0px;
 			padding: 0px;
@@ -85,11 +85,11 @@
 <body class=font>
 	<h1><img src="images/gear.png" width=32px> Spare Order System</h1>
 	<div id="main">
-		<form method="POST" action="login.php">
+		<form method="POST" action="$_Server[PHP_SELF]">
 			<h2>Sign In</h2>
 			<input type="text" name="username" placeholder="DealerID or Email">
-			<input type="text" name="pwd" placeholder="Password" id="tbPwd">
-			<div id="divRemember"><input type="checkbox" id="cbRemember"> Remember Me </div>
+			<input type="text" name="pwd" placeholder="Password" id="pwd">
+			<div id="divRemember"><input type="checkbox" id="remember"> Remember Me </div>
 			<div id="divCreate"><a href="createAccount.html">Create Account</a></div>
 			<div id="divSubmit"><input type="submit" value="Login" id="login"></div>
 			<br /><br />
