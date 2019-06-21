@@ -28,19 +28,11 @@ button:hover {
 
 input[type=button],input[type=submit],input[type=reset] {
     padding: 12px;
-    border: 1px solid #f3f3f3;
     border-radius: 5px;
-    border-left: none;
-    /* Prevent double borders */
+    border: none;
     cursor: pointer;
 }
 
 input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover {
     background: #ccc;
-    border: 1px solid #ccc;
-}
-
-input[type=submit]:hover{
-    background: #ccc;
-    border: 1px solid #ccc;
 }
