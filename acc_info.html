@@ -9,6 +9,7 @@
     <link href="css/index.css" rel="stylesheet" type="text/css" />
     <link href="css/table.css" rel="stylesheet" type="text/css" />
     <link href="css/button.css" rel="stylesheet" type="text/css" />
+
     <style>
         body {
             background-color: #f3f3f3;
@@ -34,7 +35,6 @@
             float: right;
             border-style: none;
             text-align: right;
-
         }
 
         #address {
@@ -53,6 +53,7 @@
             margin-right: 10%;
         }
     </style>
+
     <script>
         function setColor(n, id) {
             if (n == true)
@@ -75,8 +76,6 @@
         <li><a href="order_record.html">Order Record</a></li>
         <li><a class="active" href="acc_info.html">Account Info</a></li>
         <li><a href="login.html" onclick="return confirm('Are you sure you want to sign out?')">Log Out</a></li>
-        </div>
-        </li>
     </ul>
     <div id="main">
         <form method="POST" action="$_SERVER[PHP_SELF]">
@@ -109,7 +108,7 @@
                     <td><input type="password" name="rePassword"></td>
                 </tr>
             </table>
-            <input type="submit" class="whiteButton" name="update" id="update" value="Update">
+            <input type="submit" class="whiteButton" name="update" id="update" value="Update" onclick="return confirm('Are you sure to update your personal information?')">
         </form>
     </div>
 </body>
