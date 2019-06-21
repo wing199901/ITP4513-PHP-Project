@@ -44,6 +44,8 @@
         p {
             text-align: left;
             margin-left: 45px;
+            margin-top: 20px;
+            margin-bottom: 20px;
         }
 
         #name , #pwd{
@@ -70,6 +72,23 @@
         [name=hint]{
             font-size: 12px;
         }
+        li{
+            display:inline-block;
+            margin-bottom: 20px;
+        }
+        .left{
+            float: left;
+            margin-left:45px;
+
+        }
+        .right{
+            float:right;
+            margin-right: 130px;
+        }
+        .right_confirm{
+            float:right;
+            margin-right: 175px;
+        }
     </style>
 </head>
 
@@ -81,14 +100,14 @@
             <p>Account ID</p>
             <input type="text" name="accountId" id="accountId">
             <p name="hint">You can use letters, number&periods</p>
-            <p>Your Name &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Phone Number</p>
+            <li class="left">Your Name</li><li class="right">Phone Number</li><br /><br />
             <input type="text" name="name" id="name">
             <input type="text" name="tel" id="tel">
             <p>Address</p>
-            <input type="text" name="address" id="address">
-            <p>Password &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; Confirm</p>
+            <input type="text" name="address" id="address"><br/><br/>
+            <li class="left">Password</li><li class="right_confirm">Confirm</li><br />
             <input type="password" name="pwd" id="pwd">
-            <input type="password" name="confirmPwd" id="confirmPwd"><br /><br />
+            <input type="password" name="confirmPwd" id="confirmPwd"><br /><br /><br/>
             <p name="hint">Use 8 or more characters with a mis of letters, numbers & symbols</p>
             <div id="divSubmit"><input type="submit" value="Register" id="register" class="whiteButton"></div>
             <br /><br />
