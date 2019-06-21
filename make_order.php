@@ -12,34 +12,6 @@
 
     <script type="text/javascript" src="js/jquery-1.10.1.js"></script>
 
-    <script type="text/javascript">
-        //<![CDATA[
-
-        $(function() {
-
-            // Change the selector if needed
-            var $table = $('table.scroll'),
-                $bodyCells = $table.find('tbody tr:first').children(),
-                colWidth;
-
-            // Adjust the width of thead cells when window resizes
-            $(window).resize(function() {
-                // Get the tbody columns width array
-                colWidth = $bodyCells.map(function() {
-                    return $(this).width();
-                }).get();
-
-                // Set the width of thead columns
-                $table.find('thead tr').children().each(function(i, v) {
-                    $(v).width(colWidth[i]);
-                });
-            }).resize(); // Trigger resize handler
-
-        });
-
-        //]]>
-    </script>
-
     <style>
         input[type=text] {
             padding: 12px;
@@ -57,36 +29,37 @@
             float: inherit;
         }
 
-        table.scroll {
-            border-spacing: 0;
+        table {
+            border-collapse: separate;
         }
 
-        table.scroll tbody,
-        table.scroll thead {
+        thead {
             display: block;
         }
 
-        thead tr th {
-            height: auto;
-             text-align: left; 
-        }
-
-        table.scroll tbody {
-            height: 400px;
-            overflow-y: auto;
-        }
-
         tbody {
-        }
-
-        tbody td,
-        thead th {
-        }
-
-        tbody td:last-child,
-        thead th:last-child {
+            height: 400px;
+            overflow-y: scroll;
+            display: block;
         }
     </style>
+
+    <script type="text/javascript">
+        $(function() {
+            var colNumber = 7 //number of table columns
+
+            for (var i = 0; i < colNumber; i++) {
+                var thWidth = $("#myTable").find("th:eq(" + i + ")").width();
+                var tdWidth = $("#myTable").find("td:eq(" + i + ")").width();
+                if (thWidth < tdWidth)
+                    $("#myTable").find("th:eq(" + i + ")").width(tdWidth);
+                else
+                    $("#myTable").find("td:eq(" + i + ")").width(thWidth);
+            }
+
+        });
+    </script>
+
 </head>
 
 <body class="font">
@@ -115,7 +88,7 @@
 
     echo '<form method="POST" action="$_SERVER[PHP_SELF]">';
     echo '<div>
-            <table align="center" class="scroll">
+            <table align="center" id="myTable">
             <thead><tr>
             <th>Part Number</th>
             <th>Email</th>
