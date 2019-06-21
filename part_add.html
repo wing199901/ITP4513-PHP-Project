@@ -50,18 +50,26 @@
             margin-top: 28px;
         }
 
-        #divButton{
+        #divButton {
             margin-top: 10px;
             margin-right: 10%;
             float: right;
             text-align: right;
         }
+
         #divStatus {
             float: right;
         }
-
-
     </style>
+    <script>
+        function setColor(n, id) {
+            if (n == true)
+                document.getElementById(id).style.backgroundColor = "#ddd";
+            else
+                document.getElementById(id).style.backgroundColor = "white";
+
+        }
+    </script>
 </head>
 
 <body class="font">
@@ -80,7 +88,7 @@
             <table align="center">
                 <tr>
                     <th colspan="2" class="text=center">Part Adding</th>
-                <tr>
+                <tr onmouseover="setColor(true, 'partNumber')" onmouseout="setColor(false,'partNumber')">
                     <td>Part Number</td>
                     <td><input type="text" name="partNumber" id="partNumber" readonly="readonly" value="100002"
                             disabled>
@@ -88,11 +96,11 @@
                 </tr>
                 <tr>
                     <td>Part Name</td>
-                    <td><input type="text" name="partName" ></td>
+                    <td><input type="text" name="partName"></td>
                 </tr>
                 <tr>
                     <td>Stock Quantity</td>
-                    <td><input type="text" name="qty" ></td>
+                    <td><input type="text" name="qty"></td>
                 </tr>
                 <tr>
                     <td>Stock Price</td>
@@ -101,8 +109,9 @@
 
             </table>
             <div id="divButton">
-                <input type="submit" class="whiteButton" name="edit" id="edit" value="Edit">
-                <input type="button" class="whiteButton" name="cancel" id="cancel" value="Cancel" onclick="window.location.href='part_info.html'">
+                <input type="submit" class="whiteButton" name="add" id="add" value="Add">
+                <input type="button" class="whiteButton" name="cancel" id="cancel" value="Cancel"
+                    onclick="window.location.href='part_info.html'">
             </div>
         </form>
     </div>

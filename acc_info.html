@@ -52,8 +52,16 @@
             margin-top: 10px;
             margin-right: 10%;
         }
-
     </style>
+    <script>
+        function setColor(n, id) {
+            if (n == true)
+                document.getElementById(id).style.backgroundColor = "#ddd";
+            else
+                document.getElementById(id).style.backgroundColor = "white";
+
+        }
+    </script>
 </head>
 
 <body class="font">
@@ -75,7 +83,7 @@
             <table align="center">
                 <tr>
                     <th colspan="2" class="text=center">Account Information</th>
-                <tr>
+                <tr onmouseover="setColor(true, 'accountId')" onmouseout="setColor(false,'accountId')">
                     <td>Account ID</td>
                     <td><input type="text" name="accountId" id="accountId" readonly="readonly" value="100001" disabled>
                     </td>
