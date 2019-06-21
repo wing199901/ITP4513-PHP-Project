@@ -2,112 +2,111 @@
 <html>
 
 <head>
-  <meta charset="UTF-8">
-  <title>Make Order</title>
-  <link rel="icon" href="favicon.ico" type="image/x-icon" />
-  <link href="css/font.css" rel="stylesheet" type="text/css" />
-  <link href="css/index.css" rel="stylesheet" type="text/css" />
-  <style>
-      h1 {
-          text-align: center;
-      }
+    <meta charset="UTF-8">
+    <title>Account Information</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <link href="css/font.css" rel="stylesheet" type="text/css" />
+    <link href="css/index.css" rel="stylesheet" type="text/css" />
+    <link href="css/table.css" rel="stylesheet" type="text/css" />
+    <link href="css/button.css" rel="stylesheet" type="text/css" />
+    <style>
+        body {
+            background-color: #f3f3f3;
+        }
 
-      body {
-          background-color: white;
-      }
+        table {
+            border-collapse: separate;
+            background-color: white;
+            border-radius: 10px;
+            border-spacing: 0;
+            width: 80%;
+        }
 
-      #main {
-          text-align: center;
-          background-color: #F3F3F3;
-          width: 500px;
-          height: auto;
-          margin: 0 auto;
-          border: 3px #F3F3F3 solid;
-          border-radius: 10px;
-          margin-top: 100px;
-          padding-bottom: 50px;
-      }
+        th {
+            text-align: center;
+        }
 
-      h2 {
-          color: grey
-      }
+        td {
+            text-align: left;
+        }
 
-      input {
-          font-size: 25px;
-          border: 10px;
-          border-radius: 5px;
-          width: 400px;
-          padding: 10px;
-          margin: -5px;
-      }
+        input {
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            resize: vertical;
+            float: right;
+            border-style: none;
+            text-align: right;
 
-      p {
-          text-align: left;
-          margin-left: 45px;
-      }
+        }
 
-      #name , #pwd{
-          width: 180px;
-          float: left;
-          margin-left: 40px;
-          margin-bottom: 10px;
-      }
+        #address {
+            width: 100%;
+        }
 
-      #tel , #confirmPwd{
-          width: 180px;
-          float: right;
-          margin-right: 40px;
-          margin-bottom: 10px;
-      }
-  #register{
-    width: 120px;
-  }
-  #divSubmit {
-    float: right;
-          width: 200px;
-          margin-top: 15px;
-      }
-      [name=hint]{
-          font-size: 12px;
-      }
-  </style>
+        #main {
+            text-align: center;
+            width: auto;
+            height: auto;
+            margin-top: 28px;
+        }
+
+        #update {
+            margin-top: 10px;
+            margin-right: 10%;
+        }
+    </style>
 </head>
 
 <body class="font">
-  <center>
-    <h1><img src="images/gear.png" width=32px> Spare Order System</h1>
-  </center>
-  <br>
-  <ul>
-    <li><a href="dealer_index.html">Home</a></li>
-    <li><a href="make_order.html">Make Order</a></li>
-    <li><a href="record.html">Order Record</a></li>
-    <li><a class="active" href="acc_info.html">Account Info</a></li>
-    <li><a href="login.html" onclick="return confirm('Are you sure you want to sign out?')">Log Out</a></li>
+    <center>
+        <h1><img src="images/gear.png" width=32px> Spare Order System</h1>
+    </center>
+    <br>
+    <ul>
+        <li><a href="dealer_index.html">Home</a></li>
+        <li><a href="make_order.html">Make Order</a></li>
+        <li><a href="record.html">Order Record</a></li>
+        <li><a class="active" href="acc_info.html">Account Info</a></li>
+        <li><a href="login.html" onclick="return confirm('Are you sure you want to sign out?')">Log Out</a></li>
+        </div>
+        </li>
+    </ul>
+    <div id="main">
+        <form method="POST" action="$_SERVER[PHP_SELF]">
+            <table align="center">
+                <tr>
+                    <th colspan="2" class="text=center">Account Information</th>
+                <tr>
+                    <td>Account ID</td>
+                    <td><input type="text" name="accountId" id="accountId" readonly="readonly" value="100001" disabled>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Name</td>
+                    <td><input type="text" name="name" value="Peter"></td>
+                </tr>
+                <tr>
+                    <td>Phone Number</td>
+                    <td><input type="text" name="tel" value="88888888"></td>
+                </tr>
+                <tr>
+                    <td>Address</td>
+                    <td><input type="text" name="address" id="address" value="LWL"></td>
+                </tr>
+                <tr>
+                    <td>Password</td>
+                    <td><input type="password" name="password" style="border-style:none"></td>
+                </tr>
+                <tr>
+                    <td>Re-type Password</td>
+                    <td><input type="password" name="rePassword"></td>
+                </tr>
+            </table>
+            <input type="submit" name="update" id="update" value="update" class="whiteButton">
+        </form>
     </div>
-    </li>
-  </ul>
-
-  <div id="main">
-      <form method="POST" action="login.php">
-          <h2>Create your Dealer Account</h2>
-          <p>Account ID</p>
-          <input type="text" name="accountId" id="accountId">
-          <p name="hint">You can use letters, number&periods</p>
-          <p>Your Name &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Phone Number</p>
-          <input type="text" name="name" id="name">
-          <input type="text" name="tel" id="tel">
-          <p>Address</p>
-          <input type="text" name="address" id="address">
-          <p>Password &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; Confirm</p>
-          <input type="password" name="pwd" id="pwd">
-          <input type="password" name="confirmPwd" id="confirmPwd"><br /><br />
-          <p name="hint">Use 8 or more characters with a mis of letters, numbers & symbols</p>
-          <div id="divSubmit"><input type="submit" value="Register" id="register"></div>
-          <br /><br />
-      </form>
-  </div>
-
 </body>
 
 </html>
