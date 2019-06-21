@@ -7,13 +7,12 @@
     <link rel="icon" href="favicon.ico" type="image/x-icon" />
     <link href="css/font.css" rel="stylesheet" type="text/css" />
     <link href="css/index.css" rel="stylesheet" type="text/css" />
-    <link href="css/table.css" rel="stylesheet" type="text/css" />
+    <link href="css/table_make_order.css" rel="stylesheet" type="text/css" />
     <link href="css/button.css" rel="stylesheet" type="text/css" />
 
     <script type="text/javascript" src="js/jquery-1.10.1.js"></script>
 
     <style>
-
         input[type=text] {
             padding: 12px;
             border: 1px solid #ccc;
@@ -30,10 +29,6 @@
             float: inherit;
         }
 
-        table {
-            border-collapse: separate;
-        }
-
         thead {
             display: block;
         }
@@ -43,6 +38,7 @@
             overflow-y: scroll;
             display: block;
         }
+
     </style>
 
     <script type="text/javascript">
@@ -57,10 +53,8 @@
                 else
                     $("#myTable").find("td:eq(" + i + ")").width(thWidth);
             }
-
         });
     </script>
-
 </head>
 
 <body class="font">
@@ -123,6 +117,7 @@
                         <th>Price</th>
                         <th>Status</th>
                         <th>Purchase</th>
+                    </tr>
                 </thead>
                 <tbody>
                     <tr>
@@ -199,7 +194,8 @@
                     </tr>
                 </tbody>
             </table>
-        </div><br>
+        </div>
+        <br>
         <div class="submit">Delivery Address:<input type="text" name="Address">&emsp;
             <input class="whiteButton" type="submit">&emsp;<input class="whiteButton" type="reset"></div>
     </form>
