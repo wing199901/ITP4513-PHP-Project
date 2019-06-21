@@ -12,46 +12,25 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
   <style>
+    table {
+      width: 80%;
+    }
+
     input[type=text] {
       padding: 12px;
       border: 1px solid #ccc;
       border-radius: 5px;
     }
 
-    input[type=submit] {
-      font-size: 25px;
-      border: 10px;
-      border-radius: 5px;
-      padding: 10px;
-      width: 200px;
-    }
-
-    input[type=reset] {
-      font-size: 25px;
-      border: 10px;
-      border-radius: 5px;
-      padding: 10px;
-      width: 200px;
-    }
-
     div {
-      width: 99%;
+      width: auto;
       height: auto;
       text-align: center;
     }
 
-    button {
-      padding: 12px;
-      border: 1px solid #f3f3f3;
-      background-color: white;
-      border-radius: 5px;
-      border-left: none;
-      /* Prevent double borders */
-      cursor: pointer;
-    }
-
-    button:hover {
-      background: #ccc;
+    #headerButton {
+      float: left;
+      margin-left: 10%;
     }
   </style>
 </head>
@@ -70,10 +49,12 @@
   </ul>
   <br>
 
-  <form method="POST" action="$_SERVER[PHP_SELF]">
-    <div>
-      <input style="margin-left: -710px;" type="text" placeholder="Search Order" name="search" id="search">
-      <button type="submit"><i class="fa fa-search"></i></button><br><br>
+  <div>
+    <form method="POST" action="$_SERVER[PHP_SELF]">
+      <div id="headerButton">
+        <input type="text" placeholder="Search Order" name="search" id="search">
+        <button type="submit"><i class="fa fa-search"></i></button><br><br>
+      </div>
       <table align="center">
         <tr>
           <th>Order ID</th>
@@ -96,10 +77,10 @@
           <td><input class="grayButton" type="button" name="confirm" id="confirm" value="Confirm">
             <input class="grayButton" type="button" name="cancel" id="cancel" value="Cancel"></td>
         </tr>
-      </table><br>
-    </div>
-  </form>
-
+      </table>
+      <br>
+    </form>
+  </div>
 </body>
 
 </html>
