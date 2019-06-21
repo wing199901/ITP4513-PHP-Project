@@ -50,7 +50,7 @@
     <div>
         <form method="POST" action="$_SERVER[PHP_SELF]">
             <div id="headerButton">
-                <input class="whiteButton" type="button" name="add" id="add" value="+Add">
+                <input class="whiteButton" type="button" name="add" id="add" value="+Add" onclick="window.location.href='part_add.html'">
                 <input type="text" placeholder="Search Part" name="search" id="search">
                 <button type="submit"><i class="fa fa-search"></i></button><br><br>
             </div>
@@ -71,7 +71,7 @@
                     <td>$10</td>
                     <td>Available</td>
                     <td>lwl@ive.com</td>
-                    <td><input class="grayButton" type="button" name="edit" id="edit" value="Edit">
+                    <td><input class="grayButton" type="button" name="edit" id="edit" value="Edit" onclick="window.location.href='part_edit.html'">
                         <input class="grayButton" type="button" name="remove" id="remove" value="Remove"
                             onclick="return confirm('Are you sure you want to remove this part?')">
                     </td>

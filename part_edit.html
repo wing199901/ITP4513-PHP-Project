@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Account Information</title>
+    <title>Part Editing</title>
     <link rel="icon" href="favicon.ico" type="image/x-icon" />
     <link href="css/font.css" rel="stylesheet" type="text/css" />
     <link href="css/index.css" rel="stylesheet" type="text/css" />
@@ -31,10 +31,12 @@
             border: 1px solid #ccc;
             border-radius: 5px;
             resize: vertical;
-            float: right;
             border-style: none;
-            text-align: right;
+        }
 
+        input[type=text] {
+            float: right;
+            text-align: right;
         }
 
         #address {
@@ -48,10 +50,16 @@
             margin-top: 28px;
         }
 
-        #update {
+        #divButton{
             margin-top: 10px;
             margin-right: 10%;
+            float: right;
+            text-align: right;
         }
+        #divStatus {
+            float: right;
+        }
+
 
     </style>
 </head>
@@ -62,46 +70,40 @@
     </center>
     <br>
     <ul>
-        <li><a href="dealer_index.html">Home</a></li>
-        <li><a href="make_order.html">Make Order</a></li>
-        <li><a href="order_record.html">Order Record</a></li>
-        <li><a class="active" href="acc_info.html">Account Info</a></li>
+        <li><a href="admin_index.html">Home</a></li>
+        <li><a class="active" href="part_info.html">Part Info</a></li>
+        <li><a href="order_management.html">Order Management</a></li>
         <li><a href="login.html" onclick="return confirm('Are you sure you want to sign out?')">Log Out</a></li>
-        </div>
-        </li>
     </ul>
     <div id="main">
         <form method="POST" action="$_SERVER[PHP_SELF]">
             <table align="center">
                 <tr>
-                    <th colspan="2" class="text=center">Account Information</th>
+                    <th colspan="2" class="text=center">Part Editing</th>
                 <tr>
-                    <td>Account ID</td>
-                    <td><input type="text" name="accountId" id="accountId" readonly="readonly" value="100001" disabled>
+                    <td>Part Number</td>
+                    <td><input type="text" name="partNumber" id="partNumber" readonly="readonly" value="100001"
+                            disabled>
                     </td>
                 </tr>
                 <tr>
-                    <td>Name</td>
-                    <td><input type="text" name="name" value="Peter"></td>
+                    <td>Part Name</td>
+                    <td><input type="text" name="partName" value="part01" readonly="readonly" disabled></td>
                 </tr>
                 <tr>
-                    <td>Phone Number</td>
-                    <td><input type="text" name="tel" value="88888888"></td>
+                    <td>Stock Quantity</td>
+                    <td><input type="text" name="qty" value="2000"></td>
                 </tr>
                 <tr>
-                    <td>Address</td>
-                    <td><input type="text" name="address" id="address" value="LWL"></td>
+                    <td>Stock Price</td>
+                    <td><input type="text" name="price" value="$10"></td>
                 </tr>
-                <tr>
-                    <td>Password</td>
-                    <td><input type="password" name="password" style="border-style:none"></td>
-                </tr>
-                <tr>
-                    <td>Re-type Password</td>
-                    <td><input type="password" name="rePassword"></td>
-                </tr>
+
             </table>
-            <input type="submit" class="whiteButton" name="update" id="update" value="Update">
+            <div id="divButton">
+                <input type="submit" class="whiteButton" name="edit" id="edit" value="Edit">
+                <input type="button" class="whiteButton" name="cancel" id="cancel" value="Cancel" onclick="window.location.href='part_info.html'">
+            </div>
         </form>
     </div>
 </body>
