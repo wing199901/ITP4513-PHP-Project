@@ -32,7 +32,22 @@
       float: left;
       margin-left: 1%;
     }
+    .hideItems {
+            display: none;
+            background-color: #ccc;
+        }
   </style>
+
+  <script>
+    function show(hideItems) {
+
+      if (document.getElementById(hideItems).style.display == 'table-row') {
+        document.getElementById(hideItems).style.display = 'none';
+      } else {
+        document.getElementById(hideItems).style.display = 'table-row';
+      }
+    }
+  </script>
 </head>
 
 <body class="font">
@@ -60,25 +75,35 @@
           <th>Order ID</th>
           <th>Address</th>
           <th>Order Date</th>
-          <th>Part Number</th>
-          <th>Quantity</th>
           <th>Status</th>
           <th>Amount</th>
-          <th></th>
+          <th>Management</th>
         </tr>
         <tr>
           <td><a>100001</a></td>
           <td>LWL IVE</td>
           <td>2019-6-20</td>
-          <td>100001</td>
-          <td>10</td>
           <td>In processing</td>
           <td>$100</td>
-          <td><input type="button" onclick="return confirm('Are you sure you received your item(s)?')"
+          <td><input class="grayButton" type="button" name="detail" value="Items"
+            onclick="show('hi1');show('hi2');">
+            <input type="button" onclick="return confirm('Are you sure you received your item(s)?')"
               class="grayButton" name="Received" id="Received" value="Confirm">
             <input class="grayButton" type="button" value="Cancel"
               onclick="return confirm('Are you sure you want to cancel this order?')">
           </td>
+        </tr>
+        <tr id="hi1" class="hideItems">
+          <td colspan="2">Part Number: 100001</td>
+          <td colspan="2">Part Name: part1</td>
+          <td colspan="1">Quantity: 10</td>
+          <td colspan="1">Price: $10</td>
+        </tr>
+        <tr id="hi2" class="hideItems">
+          <td colspan="2">Part Number: 100002</td>
+          <td colspan="2">Part Name: part2</td>
+          <td colspan="1">Quantity: 10</td>
+          <td colspan="1">Price: $10</td>
         </tr>
       </table>
       <br>
