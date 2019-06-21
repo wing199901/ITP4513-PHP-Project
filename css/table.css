@@ -33,12 +33,7 @@ tr:hover {
     border-bottom: 1px solid #ddd;
 }
 
-tr:first-child tr:hover {
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
+tr:first-child  {
+    background-color: white;
 }
 
-tr:last-child tr:hover {
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-}
