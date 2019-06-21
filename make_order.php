@@ -8,28 +8,13 @@
     <link href="css/font.css" rel="stylesheet" type="text/css" />
     <link href="css/index.css" rel="stylesheet" type="text/css" />
     <link href="css/table.css" rel="stylesheet" type="text/css" />
+    <link href="css/button.css" rel="stylesheet" type="text/css" />
 
     <style>
         input[type=text] {
             padding: 12px;
             border: 1px solid #ccc;
             border-radius: 5px;
-        }
-
-        input[type=submit] {
-            font-size: 25px;
-            border: 10px;
-            border-radius: 5px;
-            padding: 10px;
-            width: 200px;
-        }
-
-        input[type=reset] {
-            font-size: 25px;
-            border: 10px;
-            border-radius: 5px;
-            padding: 10px;
-            width: 200px;
         }
 
         div {
@@ -75,7 +60,7 @@
         printf('<tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td><input type="text" name="purchase" id="purchase"></td></tr>', $rc['partNumber'], $rc['email'], $rc['partName'], $rc['stockQuantity'], $rc['stockPrice'], $rc['stockStatus']);
     echo '</table><br>
         <div class="submit">Delivery Address:<input type="text" name="Address">&emsp;
-        <input type="submit">&emsp;<input type="reset"></div></div></form>';
+        <input class="whiteButton" type="submit">&emsp;<input class="whiteButton" type="reset"></div></div></form>';
     mysqli_free_result($rs);
     mysqli_close($conn);
     ?>

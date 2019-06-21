@@ -39,3 +39,21 @@ input[type=button]:hover {
     background: #ccc;
     border: 1px solid #ccc;
 }
+
+input[type=submit]{
+    padding: 12px;
+    border: 1px solid #f3f3f3;
+    border-radius: 5px;
+    border-left: none;
+    /* Prevent double borders */
+    cursor: pointer;
+}
+
+input[type=reset]{
+    padding: 12px;
+    border: 1px solid #f3f3f3;
+    border-radius: 5px;
+    border-left: none;
+    /* Prevent double borders */
+    cursor: pointer;
+}
