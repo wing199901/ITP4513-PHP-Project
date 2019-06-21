@@ -10,6 +10,36 @@
     <link href="css/table.css" rel="stylesheet" type="text/css" />
     <link href="css/button.css" rel="stylesheet" type="text/css" />
 
+    <script type="text/javascript" src="js/jquery-1.10.1.js"></script>
+
+    <script type="text/javascript">
+        //<![CDATA[
+
+        $(function() {
+
+            // Change the selector if needed
+            var $table = $('table.scroll'),
+                $bodyCells = $table.find('tbody tr:first').children(),
+                colWidth;
+
+            // Adjust the width of thead cells when window resizes
+            $(window).resize(function() {
+                // Get the tbody columns width array
+                colWidth = $bodyCells.map(function() {
+                    return $(this).width();
+                }).get();
+
+                // Set the width of thead columns
+                $table.find('thead tr').children().each(function(i, v) {
+                    $(v).width(colWidth[i]);
+                });
+            }).resize(); // Trigger resize handler
+
+        });
+
+        //]]>
+    </script>
+
     <style>
         input[type=text] {
             padding: 12px;
@@ -25,6 +55,36 @@
 
         div .submit {
             float: inherit;
+        }
+
+        table.scroll {
+            border-spacing: 0;
+        }
+
+        table.scroll tbody,
+        table.scroll thead {
+            display: block;
+        }
+
+        thead tr th {
+            height: auto;
+             text-align: left; 
+        }
+
+        table.scroll tbody {
+            height: 400px;
+            overflow-y: auto;
+        }
+
+        tbody {
+        }
+
+        tbody td,
+        thead th {
+        }
+
+        tbody td:last-child,
+        thead th:last-child {
         }
     </style>
 </head>
@@ -54,13 +114,23 @@
     $rs = mysqli_query($conn, $sql);
 
     echo '<form method="POST" action="$_SERVER[PHP_SELF]">';
-    echo '<div><table align="center"><tr>
-            <th>Part Number</th><th>Email</th><th>Part Name</th><th>Quantity</th><th>Price</th><th>Status</th><th>Purchase</th>';
+    echo '<div>
+            <table align="center" class="scroll">
+            <thead><tr>
+            <th>Part Number</th>
+            <th>Email</th>
+            <th>Part Name</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Status</th>
+            <th>Purchase</th>
+            </thead>
+            <tbody>';
     while ($rc = mysqli_fetch_assoc($rs))
         printf('<tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td><input type="text" name="purchase" id="purchase"></td></tr>', $rc['partNumber'], $rc['email'], $rc['partName'], $rc['stockQuantity'], $rc['stockPrice'], $rc['stockStatus']);
-    echo '</table><br>
+    echo '</tbody></table></div><br>
         <div class="submit">Delivery Address:<input type="text" name="Address">&emsp;
-        <input class="whiteButton" type="submit">&emsp;<input class="whiteButton" type="reset"></div></div></form>';
+        <input class="whiteButton" type="submit">&emsp;<input class="whiteButton" type="reset"></div></form>';
     mysqli_free_result($rs);
     mysqli_close($conn);
     ?>
