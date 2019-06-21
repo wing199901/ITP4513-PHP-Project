@@ -32,6 +32,27 @@
             width: 200px;
         }
 
+        input[type=button] {
+            padding: 12px;
+            border: 1px solid #f3f3f3;
+            border-radius: 5px;
+            border-left: none;
+            /* Prevent double borders */
+            cursor: pointer;
+        }
+
+        input[type=button]:hover {
+            background: #ccc;
+        }
+
+        .whiteButton {
+            background-color: white;
+        }
+
+        .grayButton {
+            background-color: #f3f3f3;
+        }
+
         div {
             width: 99%;
             height: auto;
@@ -41,7 +62,7 @@
         button {
             padding: 12px;
             border: 1px solid #f3f3f3;
-            background-color: #f3f3f3;
+            background-color: white;
             border-radius: 5px;
             border-left: none;
             /* Prevent double borders */
@@ -71,11 +92,12 @@
         <li><a href="order_manage.html">Order Management</a></li>
         <li><a href="login.html" onclick="return confirm('Are you sure you want to sign out?')">Log Out</a></li>
     </ul>
+    <br>
 
     <form method="POST" action="$_SERVER[PHP_SELF]">
         <div>
-            <input style="margin-left:-10px;" type="button" name="add" id="add" value="Add">
-            <input style="margin-left: 700px;" type="text" placeholder="Search Part" name="search" id="search">
+            <input class="whiteButton" style="margin-left: -450px;" type="button" name="add" id="add" value="+Add">
+            <input type="text" placeholder="Search Part" name="search" id="search">
             <button type="submit"><i class="fa fa-search"></i></button><br><br>
             <table align="center">
                 <tr>
@@ -92,10 +114,11 @@
                     <td>2019-6-20</td>
                     <td>100001</td>
                     <td>10</td>
-                    <td><input type="button" name="edit" id="edit" value="Edit">
-                        <input type="button" name="remove" id="remove" value="Remove"></td>
+                    <td><input class="grayButton" type="button" name="edit" id="edit" value="Edit">
+                        <input class="grayButton" type="button" name="remove" id="remove" value="Remove"></td>
                 </tr>
-            </table><br>
+            </table>
+            <br>
         </div>
     </form>
 </body>
