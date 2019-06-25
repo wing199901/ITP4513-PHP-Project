@@ -8,11 +8,12 @@
 	<link href="css/font.css" rel="stylesheet" type="text/css" />
 	<link href="css/button.css" rel="stylesheet" type="text/css" />
 	<style>
-		a:active{
-			background-color:#a9c4f5;
+		a:active {
+			background-color: #a9c4f5;
 			border: 10px;
 			border-radius: 2px;
 		}
+
 		h1 {
 			text-align: center;
 		}
@@ -80,7 +81,9 @@
 			color: cornflowerblue;
 			text-decoration: none;
 		}
-		#divAdminLogin, #divDealerLogin{
+
+		#divAdminLogin,
+		#divDealerLogin {
 			float: right;
 			width: 200px;
 		}
@@ -90,20 +93,21 @@
 <body class=font>
 	<h1><img src="images/gear.png" width=32px> Spare Order System</h1>
 	<div id="main">
-		<form method="POST" action="$_Server[PHP_SELF]">
+		<form method="POST" action="index.php">
 			<h2>Sign In</h2>
 			<input type="text" name="username" placeholder="DealerID or Email">
 			<input type="text" name="pwd" placeholder="Password" id="pwd">
 			<div id="divRemember"><input type="checkbox" id="remember"> Remember Me </div>
 			<div id="divCreate"><a href="create_account.html">Create Account</a></div>
-			<div id="divSubmit"><a href="index.html" onclick="return confirm('adminLogin')"><input type="submit" value="Login" id="login" class="whiteButton"></a>
+			<div id="divSubmit"><a href="index.html" onclick="return confirm('adminLogin')"><input type="submit"
+						value="Login" id="login" class="whiteButton"></a>
 				<a href="admin_index.html">Admin Login</a>
 				<a href="dealer_index.html">Dealer Login</a></div>
-				
+
 			<br /><br />
 		</form>
 	</div>
-	
+
 </body>
 
 </html>
