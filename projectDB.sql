@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.0
+-- version 4.8.5
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: May 30, 2019 at 12:28 PM
--- Server version: 10.1.22-MariaDB
--- PHP Version: 7.1.4
+-- 主機： localhost
+-- 產生時間： 2019 年 06 月 26 日 11:23
+-- 伺服器版本： 10.1.40-MariaDB
+-- PHP 版本： 7.3.5
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -19,15 +19,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `projectDB`
+-- 資料庫： `projectDB`
 --
-CREATE DATABASE IF NOT EXISTS `projectDB` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `projectDB`;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Administrator`
+-- 資料表結構 `Administrator`
 --
 
 CREATE TABLE `Administrator` (
@@ -37,10 +35,17 @@ CREATE TABLE `Administrator` (
   `password` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- 傾印資料表的資料 `Administrator`
+--
+
+INSERT INTO `Administrator` (`email`, `firstName`, `lastName`, `password`) VALUES
+('wing199901@gmail.com', 'Steven', 'Siu', '19991110');
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Dealer`
+-- 資料表結構 `Dealer`
 --
 
 CREATE TABLE `Dealer` (
@@ -54,7 +59,7 @@ CREATE TABLE `Dealer` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `OrderPart`
+-- 資料表結構 `OrderPart`
 --
 
 CREATE TABLE `OrderPart` (
@@ -67,7 +72,7 @@ CREATE TABLE `OrderPart` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Orders`
+-- 資料表結構 `Orders`
 --
 
 CREATE TABLE `Orders` (
@@ -81,7 +86,7 @@ CREATE TABLE `Orders` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Part`
+-- 資料表結構 `Part`
 --
 
 CREATE TABLE `Part` (
@@ -94,37 +99,54 @@ CREATE TABLE `Part` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Indexes for dumped tables
+-- 傾印資料表的資料 `Part`
+--
+
+INSERT INTO `Part` (`partNumber`, `email`, `partName`, `stockQuantity`, `stockPrice`, `stockStatus`) VALUES
+(100001, 'wing199901@gmail.com', 'test', 1, '10.00', 1),
+(100002, 'wing199901@gmail.com', 'test02', 1, '10.00', 2),
+(100003, 'wing199901@gmail.com', 'test03', 0, '10.00', 1),
+(100004, 'wing199901@gmail.com', 'test04', 1, '10.00', 1),
+(100005, 'wing199901@gmail.com', 'test05', 1, '10.00', 1),
+(100006, 'wing199901@gmail.com', 'test06', 1, '10.00', 1),
+(100008, 'wing199901@gmail.com', 'test08', 1, '10.00', 1),
+(100009, 'wing199901@gmail.com', 'test09', 0, '20.00', 2),
+(100010, 'wing199901@gmail.com', 'test10', 0, '20.00', 2),
+(100011, 'wing199901@gmail.com', 'test11', 0, '20.00', 2),
+(100012, 'wing199901@gmail.com', 'test12', 0, '20.00', 2);
+
+--
+-- 已傾印資料表的索引
 --
 
 --
--- Indexes for table `Administrator`
+-- 資料表索引 `Administrator`
 --
 ALTER TABLE `Administrator`
   ADD PRIMARY KEY (`email`);
 
 --
--- Indexes for table `Dealer`
+-- 資料表索引 `Dealer`
 --
 ALTER TABLE `Dealer`
   ADD PRIMARY KEY (`dealerID`);
 
 --
--- Indexes for table `OrderPart`
+-- 資料表索引 `OrderPart`
 --
 ALTER TABLE `OrderPart`
   ADD KEY `FKOrderPart106296` (`orderID`),
   ADD KEY `FKOrderPart737123` (`partNumber`);
 
 --
--- Indexes for table `Orders`
+-- 資料表索引 `Orders`
 --
 ALTER TABLE `Orders`
   ADD PRIMARY KEY (`orderID`),
   ADD KEY `FKOrders795865` (`dealerID`);
 
 --
--- Indexes for table `Part`
+-- 資料表索引 `Part`
 --
 ALTER TABLE `Part`
   ADD PRIMARY KEY (`partNumber`),
@@ -132,38 +154,40 @@ ALTER TABLE `Part`
   ADD KEY `FKPart451022` (`email`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- 在傾印的資料表使用自動增長(AUTO_INCREMENT)
 --
 
 --
--- AUTO_INCREMENT for table `Orders`
+-- 使用資料表自動增長(AUTO_INCREMENT) `Orders`
 --
 ALTER TABLE `Orders`
-  MODIFY `orderID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `orderID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100001;
+
 --
--- AUTO_INCREMENT for table `Part`
+-- 使用資料表自動增長(AUTO_INCREMENT) `Part`
 --
 ALTER TABLE `Part`
-  MODIFY `partNumber` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `partNumber` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100013;
+
 --
--- Constraints for dumped tables
+-- 已傾印資料表的限制(constraint)
 --
 
 --
--- Constraints for table `OrderPart`
+-- 資料表的限制(constraint) `OrderPart`
 --
 ALTER TABLE `OrderPart`
   ADD CONSTRAINT `FKOrderPart106296` FOREIGN KEY (`orderID`) REFERENCES `Orders` (`orderID`),
   ADD CONSTRAINT `FKOrderPart737123` FOREIGN KEY (`partNumber`) REFERENCES `Part` (`partNumber`);
 
 --
--- Constraints for table `Orders`
+-- 資料表的限制(constraint) `Orders`
 --
 ALTER TABLE `Orders`
   ADD CONSTRAINT `FKOrders795865` FOREIGN KEY (`dealerID`) REFERENCES `Dealer` (`dealerID`);
 
 --
--- Constraints for table `Part`
+-- 資料表的限制(constraint) `Part`
 --
 ALTER TABLE `Part`
   ADD CONSTRAINT `FKPart451022` FOREIGN KEY (`email`) REFERENCES `Administrator` (`email`);
