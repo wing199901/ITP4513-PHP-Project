@@ -99,7 +99,9 @@
 				require_once('conn.php');
 				$sql = "SELECT dealerID FROM Dealer where dealerID = '$loginName'";
 				$rs = mysqli_query($conn, $sql);
-				if(mysqli_num_rows($rs)==1){
+				$rc = mysqli_fetch_assoc($rs);
+				if(mysqli_num_rows($rs)==1&&$loginName==$rc['dealerID']){
+
 				header("Location:dealer_index.html");
 				}else{
 					echo "<script>alert('Wrong username or password. Please try again');window.location.href='index.php';</script>";
