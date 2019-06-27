@@ -10,6 +10,9 @@
     <link href="css/button.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
     <style>
         table {
             width: 80%;
@@ -41,7 +44,7 @@
     <br>
     <ul>
         <li><a href="admin_index.html">Home</a></li>
-        <li><a class="active" href="part_info.html">Part Info</a></li>
+        <li><a class="active" href="part_info.php">Part Info</a></li>
         <li><a href="order_management.html">Order Management</a></li>
         <li><a href="index.html" onclick="return confirm('Are you sure you want to sign out?')">Log Out</a></li>
     </ul>
@@ -72,11 +75,11 @@
                     $sql = "SELECT * FROM Part WHERE partNumber LIKE '%$_POST[search]%' OR partName LIKE '%$_POST[search]%'";
                     $rs = mysqli_query($conn, $sql);
                     while ($rc = mysqli_fetch_assoc($rs)) {
-                        $status="";
-                        if($rc['stockStatus']=='1'){
-                            $status="Available";
-                        }else{
-                            $status="Unavailable";
+                        $status = "";
+                        if ($rc['stockStatus'] == '1') {
+                            $status = "Available";
+                        } else {
+                            $status = "Unavailable";
                         }
                         echo "<tr>
                                 <td><a>$rc[partNumber]</a></td>
@@ -97,31 +100,52 @@
                     $rs = mysqli_query($conn, $sql);
 
                     while ($rc = mysqli_fetch_assoc($rs)) {
-                        $status="";
-                        if($rc['stockStatus']=='1'){
-                            $status="Available";
-                        }else{
-                            $status="Unavailable";
+
+                        $status = "";
+                        if ($rc['stockStatus'] == '1') {
+                            $status = "Available";
+                        } else {
+                            $status = "Unavailable";
                         }
-                        echo "<tr>
-                        <td><a>$rc[partNumber]</a></td>
-                        <td>$rc[partName]</td>
-                        <td>$rc[stockQuantity]</td>
-                        <td>$rc[stockPrice]</td>
-                        <td>$status</td>
-                        <td>$rc[email]</td>
-                        <td><input class='grayButton' type='button' name=$rc[partNumber] id='edit' value='Edit' onclick='window.location.href='part_edit.html''>
-                            <input class='grayButton' type='button' name=$rc[partNumber] id='remove' value='Remove'
-                                onclick='return confirm('Are you sure you want to remove this part?')'>
-                        </td>
-                    </tr>";
-                    }
-                }
-                ?>
+                        ?>
+                        <tr id="<?php echo $rc['partNumber'] ?>">
+                            <td><a><?php echo$rc['partNumber'] ?></a></td>
+                            <td><?php echo $rc['partName'] ?></td>
+                            <td><?php echo $rc['stockQuantity'] ?></td>
+                            <td><?php echo $rc['stockPrice'] ?></td>
+                            <td><?php echo $status ?></td>
+                            <td><?php echo $rc['email'] ?></td>
+                            <td><button class='grayButton'>Edit</button>
+                                <button class="grayButton remove">Remove</button>
+                            </td>
+                        </tr>
+                    <?php }
+            } ?>
             </table>
             <br>
         </form>
     </div>
 </body>
+
+<script type="text/javascript">
+    $(".remove").click(function() {
+        var id = $(this).parents("tr").attr("id");
+        if (confirm('Are you sure to remove this record ?')) {
+            $.ajax({
+                url: '/remove.php',
+                type: 'GET',
+                data: {
+                    partNumber: id
+                },
+                error: function() {
+                    alert('Something is wrong');
+                },
+                success: function(data) {
+                    alert("Record removed successfully");
+                }
+            });
+        }
+    });
+</script>
 
 </html>
