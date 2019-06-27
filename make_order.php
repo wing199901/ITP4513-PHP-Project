@@ -77,12 +77,27 @@
 
 
     <?php
-    require_once('conn.php');
-    $sql = "SELECT * FROM Part WHERE stockStatus = 1 AND stockQuantity > 0 ";
-    $rs = mysqli_query($conn, $sql);
 
-    echo '<form method="POST" action="$_SERVER[PHP_SELF]">';
-    echo '<div>
+
+    if (isset($_POST['submit'])) {
+        header("Location:index.php");
+        echo "<script>alert('');</script>";
+
+        $confirm_message = '<script>confirm("';
+        while ($rc = mysqli_fetch_assoc($rs)) {
+            if ($_POST[$rc['partNumber']] != "") {
+                $confirm_message += "$rc[partNumber]";
+            }
+        }
+        $confirm_message += ")</script>";
+    } else {
+        require_once('conn.php');
+        $sql = "SELECT * FROM Part WHERE stockStatus = 1 AND stockQuantity > 0 ";
+        $rs = mysqli_query($conn, $sql);
+
+        $show = <<<EOD
+        <form method="POST" action="$_SERVER[PHP_SELF]">
+        <div>
             <table align="center" id="myTable">
             <thead><tr>
             <th>Part Number</th>
@@ -92,40 +107,32 @@
             <th>Price</th>
             <th>Status</th>
             <th>Purchase</th>
+            </tr>
             </thead>
-            <tbody>';
-    while ($rc = mysqli_fetch_assoc($rs)) {
-        printf(
-            '<tr><td>%s</td>
-            <td>%s</td>
-            <td>%s</td>
-            <td>%s</td>
-            <td>%s</td>
-            <td>Available</td>
-            <td><input type="text" name="%s" id="purchase"></td></tr>',
-            $rc['partNumber'],
-            $rc['email'],
-            $rc['partName'],
-            $rc['stockQuantity'],
-            $rc['stockPrice'],
-            $rc['partNumber']
-        );
+            <tbody>            
+EOD;
+        echo $show;
+        while ($rc = mysqli_fetch_assoc($rs)) {
+            $show = "<tr>
+            <td>$rc[partNumber]</td>
+            <td>$rc[email]</td>
+            <td>$rc[partName]</td>
+            <td>$rc[stockQuantity]</td>
+            <td>$rc[stockPrice]</td>
+            <td>Status</td>
+            <td><input type='text' name=$rc[partNumber] id='purchase'></td>
+            </tr>";
+            echo $show;
+        }
+        $show = "</tbody></table>";
+        echo $show;
+        $show = '</tbody></table></div><br>
+        <div class="submit">Delivery Address:<input type="text" name="Address" value="My address">&emsp;
+        <input class="whiteButton" type="submit" name="submit" onclick="return confirm("Are you sure you want to place order?");">&emsp;
+        <input class="whiteButton" type="reset"></div>
+        </form>';
+        echo $show;
     }
-    echo '</tbody></table></div><br>
-            <div class="submit">Delivery Address:<input type="text" name="Address" value="My address">&emsp;
-            <input class="whiteButton" type="submit" onclick="return confirm("Are you sure you want to place order?")">&emsp;
-            <input class="whiteButton" type="reset"></div>
-            </form>';
-
-    if (isset($_POST[$rc['partNumber']])) {
-
-        while ($rc = mysqli_fetch_assoc($rs)) { }
-
-        $_POST[$rc['partNumber']] != "";
-    }
-
-    mysqli_free_result($rs);
-    mysqli_close($conn);
     ?>
 
 
