@@ -100,16 +100,47 @@
 				$sql = "SELECT dealerID FROM Dealer where dealerID = '$loginName'";
 				$rs = mysqli_query($conn, $sql);
 				$rc = mysqli_fetch_assoc($rs);
-				if(mysqli_num_rows($rs)==1&&$loginName==$rc['dealerID']){
-
-				header("Location:dealer_index.html");
-				}else{
+				if (mysqli_num_rows($rs) == 1 && $loginName == $rc['dealerID']) {
+					$sql = sprintf("SELECT password FROM Dealer where dealerID = '%s'", $loginName);
+					$rs = mysqli_query($conn, $sql);
+					$rc = mysqli_fetch_assoc($rs);
+					if ($pwd == $rc['password']) {
+						mysqli_free_result($rs);
+						mysqli_close($sql);
+						header("Location:dealer_index.html");
+					}else{
+						mysqli_free_result($rs);
+						mysqli_close($sql);
+						echo "<script>alert('Wrong username or password. Please try again');window.location.href='index.php';</script>";
+					}
+				} else {
+					mysqli_free_result($rs);
+					mysqli_close($sql);
 					echo "<script>alert('Wrong username or password. Please try again');window.location.href='index.php';</script>";
 				}
-			}else{
-				//....
+			} else {//here
+				require_once('conn.php');
+				$sql = "SELECT email FROM Administrator where email = '$loginName'";
+				$rs = mysqli_query($conn, $sql);
+				$rc = mysqli_fetch_assoc($rs);
+				if (mysqli_num_rows($rs) == 1 && $loginName == $rc['email']) {
+					$sql = sprintf("SELECT password FROM Administrator where email = '%s'", $loginName);
+					$rs = mysqli_query($conn, $sql);
+					$rc = mysqli_fetch_assoc($rs);
+					if ($pwd == $rc['password']) {
+						mysqli_free_result($rs);
+						mysqli_close($sql);
+						header("Location:admin_index.html");
+					}else{
+						mysqli_free_result($rs);
+						mysqli_close($sql);
+						echo "<script>alert('Wrong username or password. Please try again');window.location.href='index.php';</script>";
+					}
+				}
 			}
 		} else {
+			mysqli_free_result($rs);
+			mysqli_close($sql);
 			echo "<script>alert('Please enter your username and password.');window.location.href='index.php';</script>";
 		}
 	} else {
@@ -132,6 +163,7 @@
 		</form>
 	</div>
 EOD;
+
 		echo $login;
 	}
 	?>
