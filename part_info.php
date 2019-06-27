@@ -48,11 +48,12 @@
     <br>
 
     <div>
-        <form method="POST" action="$_SERVER[PHP_SELF]">
+        <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
             <div id="headerButton">
                 <input class="whiteButton" type="button" name="add" id="add" value="+Add" onclick="window.location.href='part_add.html'">
                 <input type="text" placeholder="Search Part" name="search" id="search">
-                <button type="submit"><i class="fa fa-search"></i></button><br><br>
+                <button type="submit" name="submit"><i class="fa fa-search"></i></button><br><br>
+
             </div>
             <table align="center">
                 <tr>
@@ -65,23 +66,56 @@
                     <th>Management</th>
                 </tr>
                 <?php
-                require_once('conn.php');
-                $sql = "SELECT * FROM Part WHERE stockStatus = 1 AND stockQuantity > 0 ";
-                $rs = mysqli_query($conn, $sql);
-                
-                while ($rc = mysqli_fetch_assoc($rs)) {
-                    echo "<tr>
-                    <td><a>$rc[partNumber]</a></td>
-                    <td>$rc[partName]</td>
-                    <td>$rc[stockQuantity]</td>
-                    <td>$rc[stockPrice]</td>
-                    <td>$rc[stockStatus]</td>
-                    <td>$rc[email]</td>
-                    <td><input class='grayButton' type='button' name=$rc[partNumber] id='edit' value='Edit' onclick='window.location.href='part_edit.html''>
-                        <input class='grayButton' type='button' name=$rc[partNumber] id='remove' value='Remove'
-                            onclick='return confirm('Are you sure you want to remove this part?')'>
-                    </td>
-                </tr>";
+
+                if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                    require_once('conn.php');
+                    $sql = "SELECT * FROM Part WHERE partNumber LIKE '%$_POST[search]%' OR partName LIKE '%$_POST[search]%'";
+                    $rs = mysqli_query($conn, $sql);
+                    while ($rc = mysqli_fetch_assoc($rs)) {
+                        $status="";
+                        if($rc['stockStatus']=='1'){
+                            $status="Available";
+                        }else{
+                            $status="Unavailable";
+                        }
+                        echo "<tr>
+                                <td><a>$rc[partNumber]</a></td>
+                                <td>$rc[partName]</td>
+                                <td>$rc[stockQuantity]</td>
+                                <td>$rc[stockPrice]</td>
+                                <td>$status</td>
+                                <td>$rc[email]</td>
+                                <td><input class='grayButton' type='button' name=$rc[partNumber] id='edit' value='Edit' onclick='window.location.href='part_edit.html''>
+                                    <input class='grayButton' type='button' name=$rc[partNumber] id='remove' value='Remove'
+                                        onclick='return confirm('Are you sure you want to remove this part?')'>
+                                </td>
+                            </tr>";
+                    }
+                } else {
+                    require_once('conn.php');
+                    $sql = "SELECT * FROM Part";
+                    $rs = mysqli_query($conn, $sql);
+
+                    while ($rc = mysqli_fetch_assoc($rs)) {
+                        $status="";
+                        if($rc['stockStatus']=='1'){
+                            $status="Available";
+                        }else{
+                            $status="Unavailable";
+                        }
+                        echo "<tr>
+                        <td><a>$rc[partNumber]</a></td>
+                        <td>$rc[partName]</td>
+                        <td>$rc[stockQuantity]</td>
+                        <td>$rc[stockPrice]</td>
+                        <td>$status</td>
+                        <td>$rc[email]</td>
+                        <td><input class='grayButton' type='button' name=$rc[partNumber] id='edit' value='Edit' onclick='window.location.href='part_edit.html''>
+                            <input class='grayButton' type='button' name=$rc[partNumber] id='remove' value='Remove'
+                                onclick='return confirm('Are you sure you want to remove this part?')'>
+                        </td>
+                    </tr>";
+                    }
                 }
                 ?>
             </table>
