@@ -88,9 +88,8 @@
                                 <td>$rc[stockPrice]</td>
                                 <td>$status</td>
                                 <td>$rc[email]</td>
-                                <td><input class='grayButton' type='button' name=$rc[partNumber] id='edit' value='Edit' onclick='window.location.href='part_edit.html''>
-                                    <input class='grayButton' type='button' name=$rc[partNumber] id='remove' value='Remove'
-                                        onclick='return confirm('Are you sure you want to remove this part?')'>
+                                <td><button class='grayButton edit'>Edit</button>
+                                <button class='grayButton remove'>Remove</button>
                                 </td>
                             </tr>";
                     }
@@ -115,7 +114,7 @@
                             <td><?php echo $rc['stockPrice'] ?></td>
                             <td><?php echo $status ?></td>
                             <td><?php echo $rc['email'] ?></td>
-                            <td><button class='grayButton'>Edit</button>
+                            <td><button class='grayButton edit'>Edit</button>
                                 <button class="grayButton remove">Remove</button>
                             </td>
                         </tr>
@@ -142,6 +141,26 @@
                 },
                 success: function(data) {
                     alert("Part removed successfully");
+                }
+            });
+        }
+    });
+    
+    $(".edit").click(function() {
+        var id = $(this).parents("tr").attr("id");
+        if (confirm('Are you sure to edit this part?')) {
+            $.ajax({
+                url: 'edit.php',
+                type: 'GET',
+                data: {
+                    partNumber: id
+                },
+                error: function() {
+                    alert('Something is wrong');
+                },
+                success: function(data) {
+                    alert("Part edited successfully");
+                    window.location.href="part_edit.php";
                 }
             });
         }
