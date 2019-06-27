@@ -9,3 +9,4 @@ if (isset($_GET['partNumber'])) {
     mysqli_free_result($rs);
     mysqli_close($conn);
 }
+?>
