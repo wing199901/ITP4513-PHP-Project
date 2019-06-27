@@ -34,6 +34,13 @@
             float: left;
             margin-left: 10%;
         }
+        
+        .edit .remove{
+            padding: 12px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+        }
     </style>
 </head>
 
