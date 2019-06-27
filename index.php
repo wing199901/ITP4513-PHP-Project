@@ -88,13 +88,25 @@
 			width: 200px;
 		}
 	</style>
-</head>
+	<script>
+	function dealerLogin(){
 
+	}
+	</script>
+</head>
 <body class=font>
 	<?php
 	if (isset($_POST['loginName'])) {
-		if ($_POST['loginName'] != "" && $_POST['pwd'] != "") {
+		if (!empty($_POST['loginName']) && !empty($_POST['pwd'])) {
 			extract($_POST);
+			if (!empty($remember)) {
+
+				setcookie("loginName", $loginName, time() + (7 * 24 * 60 * 60));
+			} else {
+				if (isset($_COOKIE["loginName"])) {
+					setcookie("loginName", "", time() - 60);
+				}
+			}
 			if (strstr($loginName, "@") == false) {
 				require_once('conn.php');
 				$sql = "SELECT dealerID FROM Dealer where dealerID = '$loginName'";
@@ -106,19 +118,20 @@
 					$rc = mysqli_fetch_assoc($rs);
 					if ($pwd == $rc['password']) {
 						mysqli_free_result($rs);
-						mysqli_close($sql);
-						header("Location:dealer_index.html");
-					}else{
+						mysqli_close($conn);
+						echo "<script>dealerLogin();</script>";
+						//header("Location:dealer_index.html");
+					} else {
 						mysqli_free_result($rs);
-						mysqli_close($sql);
+						mysqli_close($conn);
 						echo "<script>alert('Wrong username or password. Please try again');window.location.href='index.php';</script>";
 					}
 				} else {
 					mysqli_free_result($rs);
-					mysqli_close($sql);
+					mysqli_close($conn);
 					echo "<script>alert('Wrong username or password. Please try again');window.location.href='index.php';</script>";
 				}
-			} else {//here
+			} else { //here
 				require_once('conn.php');
 				$sql = "SELECT email FROM Administrator where email = '$loginName'";
 				$rs = mysqli_query($conn, $sql);
@@ -129,42 +142,42 @@
 					$rc = mysqli_fetch_assoc($rs);
 					if ($pwd == $rc['password']) {
 						mysqli_free_result($rs);
-						mysqli_close($sql);
+						mysqli_close($conn);
 						header("Location:admin_index.html");
-					}else{
+					} else {
 						mysqli_free_result($rs);
-						mysqli_close($sql);
+						mysqli_close($conn);
 						echo "<script>alert('Wrong username or password. Please try again');window.location.href='index.php';</script>";
 					}
+				} else {
+					mysqli_free_result($rs);
+					mysqli_close($conn);
+					echo "<script>alert('Wrong username or password. Please try again');window.location.href='index.php';</script>";
 				}
 			}
 		} else {
-			mysqli_free_result($rs);
-			mysqli_close($sql);
 			echo "<script>alert('Please enter your username and password.');window.location.href='index.php';</script>";
 		}
 	} else {
 		$login = <<<EOD
 	<h1><img src="images/gear.png" width=32px> Spare Order System</h1>
 	<div id="main">
-		<form method="POST" action="$_SERVER[PHP_SELF]">
+		<form method="POST" action="$_SERVER[PHP_SELF]" id="loginForm" name="loginForm" value="1">
 			<h2>Sign In</h2>
-			<input type="text" name="loginName" placeholder="DealerID or Email">
-			<input type="text" name="pwd" placeholder="Password" id="pwd">
-			<div id="divRemember"><input type="checkbox" id="remember"> Remember Me </div>
-			<div id="divCreate"><a href="create_account.html">Create Account</a></div>
-			<div id="divSubmit"><input type="submit"
-						value="Login" id="login" class="whiteButton">
-						<br/>
-				<a href="admin_index.html">Admin Login</a>
-				<a href="dealer_index.html">Dealer Login</a></div>
+			<input type="text" name="loginName" placeholder="DealerID or Email" value="%s">
+	<input type="text" name="pwd" placeholder="Password" id="pwd">
+	<div id="divRemember"><input type="checkbox" id="remember" name="remember" %s> Remember Me </div>
+	<div id="divCreate"><a href="create_account.html">Create Account</a></div>
+	<div id="divSubmit"><input type="submit" value="Login" id="login" class="whiteButton">
+		<br />
+		<a href="admin_index.html">Admin Login</a>
+		<a href="dealer_index.html">Dealer Login</a></div>
 
-			<br /><br />
-		</form>
+	<br /><br />
+	</form>
 	</div>
 EOD;
-
-		echo $login;
+		printf($login, (isset($_COOKIE["loginName"])) ? $_COOKIE["loginName"] : "", (isset($_COOKIE["loginName"])) ? "checked" : "");
 	}
 	?>
 </body>
