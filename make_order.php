@@ -64,7 +64,7 @@
     <ul>
         <li><a href="dealer_index.html">Home</a>
         </li>
-        <li><a class="active" href="make_order.html">Make Order</a>
+        <li><a class="active" href="make_order.php">Make Order</a>
         </li>
         <li><a href="order_record.html">Order Record</a>
         </li>
@@ -78,25 +78,26 @@
 
     <?php
 
+    require_once('conn.php');
+    $sql = "SELECT * FROM Part WHERE stockStatus = 1 AND stockQuantity > 0 ";
+    $rs = mysqli_query($conn, $sql);
 
     if (isset($_POST['submit'])) {
-        header("Location:index.php");
-        echo "<script>alert('');</script>";
-
-        $confirm_message = '<script>confirm("';
+        //echo "<script>alert('submit');</script>";
+        $confirm_message = "";
         while ($rc = mysqli_fetch_assoc($rs)) {
             if ($_POST[$rc['partNumber']] != "") {
-                $confirm_message += "$rc[partNumber]";
+                $confirm_message .= "$rc[partName]:\t";
+                $tmp = "$rc[partNumber]";
+                $confirm_message .= "$_POST[$tmp]\n";
+                echo $confirm_message;
+                echo'<script>alert("' .$confirm_message. '");</script>';
             }
         }
-        $confirm_message += ")</script>";
     } else {
-        require_once('conn.php');
-        $sql = "SELECT * FROM Part WHERE stockStatus = 1 AND stockQuantity > 0 ";
-        $rs = mysqli_query($conn, $sql);
 
         $show = <<<EOD
-        <form method="POST" action="$_SERVER[PHP_SELF]">
+        <form method="POST" action="$_SERVER[PHP_SELF]" onSubmit="return validateForm()">
         <div>
             <table align="center" id="myTable">
             <thead><tr>
@@ -111,9 +112,8 @@
             </thead>
             <tbody>            
 EOD;
-        echo $show;
         while ($rc = mysqli_fetch_assoc($rs)) {
-            $show = "<tr>
+            $show .= "<tr>
             <td>$rc[partNumber]</td>
             <td>$rc[email]</td>
             <td>$rc[partName]</td>
@@ -122,20 +122,27 @@ EOD;
             <td>Status</td>
             <td><input type='text' name=$rc[partNumber] id='purchase'></td>
             </tr>";
-            echo $show;
         }
-        $show = "</tbody></table>";
-        echo $show;
-        $show = '</tbody></table></div><br>
+        $show .= "</tbody></table>";
+        $show .= '</tbody></table></div><br>
         <div class="submit">Delivery Address:<input type="text" name="Address" value="My address">&emsp;
         <input class="whiteButton" type="submit" name="submit" onclick="return confirm("Are you sure you want to place order?");">&emsp;
         <input class="whiteButton" type="reset"></div>
         </form>';
         echo $show;
+
+        mysqli_free_result($rs);
+        mysqli_close($conn);
     }
     ?>
 
-
+    <script>
+        function validateForm() {
+            alert("By ticking this box you agree that you have clearly read this document according to our terms and conditions and agree to digitally sign the document.");
+            var sql = "<?php echo $sql; ?>";
+            alert(sql);
+        }
+    </script>
 </body>
 
 </html>
