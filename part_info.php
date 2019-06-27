@@ -130,7 +130,7 @@
 <script type="text/javascript">
     $(".remove").click(function() {
         var id = $(this).parents("tr").attr("id");
-        if (confirm('Are you sure to remove this record ?')) {
+        if (confirm('Are you sure to remove this part?')) {
             $.ajax({
                 url: 'remove.php',
                 type: 'GET',
@@ -141,7 +141,7 @@
                     alert('Something is wrong');
                 },
                 success: function(data) {
-                    alert("Record removed successfully");
+                    alert("Part removed successfully");
                 }
             });
         }
