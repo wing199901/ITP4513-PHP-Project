@@ -10,8 +10,8 @@
     <link href="css/button.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-<script src="js/jquery.min.js"></script>
-
+    <script src="js/jquery.min.js"></script>
+    <script src="jquery.redirect.js"></script>
 
     <style>
         table {
@@ -34,12 +34,13 @@
             float: left;
             margin-left: 10%;
         }
-        
-        .edit .remove{
+
+        .edit,
+        .remove {
             padding: 12px;
-    border-radius: 5px;
-    border: none;
-    cursor: pointer;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -115,7 +116,7 @@
                         }
                         ?>
                         <tr id="<?php echo $rc['partNumber'] ?>">
-                            <td><a><?php echo$rc['partNumber'] ?></a></td>
+                            <td><a><?php echo $rc['partNumber'] ?></a></td>
                             <td><?php echo $rc['partName'] ?></td>
                             <td><?php echo $rc['stockQuantity'] ?></td>
                             <td><?php echo $rc['stockPrice'] ?></td>
@@ -126,7 +127,7 @@
                             </td>
                         </tr>
                     <?php }
-            } ?>
+                } ?>
             </table>
             <br>
         </form>
@@ -152,23 +153,13 @@
             });
         }
     });
-    
+</script>
+<script>
     $(".edit").click(function() {
         var id = $(this).parents("tr").attr("id");
         if (confirm('Are you sure to edit this part?')) {
-            $.ajax({
-                url: 'edit.php',
-                type: 'GET',
-                data: {
-                    partNumber: id
-                },
-                error: function() {
-                    alert('Something is wrong');
-                },
-                success: function(data) {
-                    alert("Part edited successfully");
-                    window.location.href="part_edit.php";
-                }
+            $.redirect(part_edit.php, {
+                partNumber: id
             });
         }
     });
