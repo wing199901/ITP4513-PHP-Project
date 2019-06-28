@@ -73,7 +73,6 @@
 </head>
 
 <body class="font">
-    
     <center>
         <h1><img src="images/gear.png" width=32px> Spare Order System</h1>
     </center>
@@ -87,26 +86,36 @@
     <div id="main">
         <form method="POST" action="$_SERVER[PHP_SELF]">
             <table align="center">
-                <tr>
-                    <th colspan="2" class="text=center">Part Editing</th>
-                <tr onmouseover="setColor(true, 'partNumber')" onmouseout="setColor(false,'partNumber')">
-                    <td>Part Number</td>
-                    <td><input type="text" name="partNumber" id="partNumber" readonly="readonly" value="100001" disabled>
-                    </td>
-                </tr>
-                <tr onmouseover="setColor(true, 'partName')" onmouseout="setColor(false,'partName')">
-                    <td>Part Name</td>
-                    <td><input type="text" name="partName" id="partName" value="part01" readonly="readonly" disabled></td>
-                </tr>
-                <tr>
-                    <td>Stock Quantity</td>
-                    <td><input type="text" name="qty" value="2000"></td>
-                </tr>
-                <tr>
-                    <td>Stock Price</td>
-                    <td><input type="text" name="price" value="$10"></td>
-                </tr>
 
+                <?php
+                
+                require_once('conn.php');
+                $sql = "SELECT * FROM Part WHERE partNumber = $_GET[partNumber]";
+                $rs = mysqli_query($conn, $sql);
+
+                while ($rc = mysqli_fetch_assoc($rs)) {
+                    ?>
+
+                    <tr>
+                        <th colspan="2" class="text=center">Part Editing</th>
+                    <tr onmouseover="setColor(true, 'partNumber')" onmouseout="setColor(false,'partNumber')">
+                        <td>Part Number</td>
+                        <td><input type="text" name="partNumber" id="partNumber" readonly="readonly" value="<?php echo $rc['partNumber']; ?>" disabled>
+                        </td>
+                    </tr>
+                    <tr onmouseover="setColor(true, 'partName')" onmouseout="setColor(false,'partName')">
+                        <td>Part Name</td>
+                        <td><input type="text" name="partName" id="partName" value="<?php echo $rc['partName']; ?>" readonly="readonly" disabled></td>
+                    </tr>
+                    <tr>
+                        <td>Stock Quantity</td>
+                        <td><input type="text" name="qty" value="<?php echo $rc['stockQuantity']; ?>"></td>
+                    </tr>
+                    <tr>
+                        <td>Stock Price</td>
+                        <td><input type="text" name="price" value="$<?php echo $rc['stockPrice']; ?>"></td>
+                    </tr>
+                <?php } ?>
             </table>
             <div id="divButton">
                 <input type="submit" class="whiteButton" name="edit" id="edit" value="Update" onclick="return confirm('Are you sure you want to edit part?')">

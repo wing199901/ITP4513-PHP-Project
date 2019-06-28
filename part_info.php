@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <script src="js/jquery.min.js"></script>
-    <script src="jquery.redirect.js"></script>
+    <script src="js/jquery.redirect.js"></script>
 
     <style>
         table {
@@ -158,10 +158,9 @@
     $(".edit").click(function() {
         var id = $(this).parents("tr").attr("id");
         if (confirm('Are you sure to edit this part?')) {
-            $.redirect(part_edit.php, {
-                partNumber: id
-            });
+            document.location.href= "part_edit.php?partNumber="+id;
         }
+        return false;
     });
 </script>
 
