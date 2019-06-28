@@ -54,7 +54,7 @@
         <li><a href="admin_index.html">Home</a></li>
         <li><a class="active" href="part_info.php">Part Info</a></li>
         <li><a href="order_management.html">Order Management</a></li>
-        <li><a href="index.html" onclick="return confirm('Are you sure you want to sign out?')">Log Out</a></li>
+        <li><a href="index.php" onclick="return confirm('Are you sure you want to sign out?')">Log Out</a></li>
     </ul>
     <br>
 
@@ -158,7 +158,7 @@
     $(".edit").click(function() {
         var id = $(this).parents("tr").attr("id");
         if (confirm('Are you sure to edit this part?')) {
-            document.location.href= "part_edit.php?partNumber="+id;
+            document.location.href = "part_edit.php?partNumber=" + id;
         }
         return false;
     });

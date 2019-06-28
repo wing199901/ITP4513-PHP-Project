@@ -88,7 +88,9 @@
             <table align="center">
 
                 <?php
-                
+                session_start();
+                $email = $_SESSION['loginName'];
+
                 require_once('conn.php');
                 $sql = "SELECT * FROM Part WHERE partNumber = $_GET[partNumber]";
                 $rs = mysqli_query($conn, $sql);
@@ -124,5 +126,16 @@
         </form>
     </div>
 </body>
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    require_once('conn.php');
+    $sql = "UPDATE Part SET email = $email, stockQuantity = $_POST[qty], stockPrice = $_POST[price]";
+    if ($conn->query($sql) == TRUE) {
+        echo "<script>alert('Record updated successfully')";
+    } else {
+        echo "<script>alert('Error updating record:". $conn->error."')</script>";
+    }
+}
+?>
 
 </html>
