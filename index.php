@@ -7,6 +7,7 @@
 	<link rel="icon" href="favicon.ico" type="image/x-icon" />
 	<link href="css/font.css" rel="stylesheet" type="text/css" />
 	<link href="css/button.css" rel="stylesheet" type="text/css" />
+	<script src="js/jquery-1.10.1.js"></script>
 	<style>
 		a:active {
 			background-color: #a9c4f5;
@@ -89,11 +90,25 @@
 		}
 	</style>
 	<script>
-	function dealerLogin(){
-
-	}
+		function dealerLogin(name) {
+			$.ajax({
+				type: 'POST',
+				url: 'dealer_index.php',
+				data: {
+					loginName: name,
+					a:"b"
+				},
+				error: function() {
+					alert('Something is  wrong');
+				},
+				success: function(data) {
+					window.location.href = "dealer_index.php";
+				}
+			})
+		}
 	</script>
 </head>
+
 <body class=font>
 	<?php
 	if (isset($_POST['loginName'])) {
@@ -119,8 +134,7 @@
 					if ($pwd == $rc['password']) {
 						mysqli_free_result($rs);
 						mysqli_close($conn);
-						echo "<script>dealerLogin();</script>";
-						//header("Location:dealer_index.html");
+						echo "<script> dealerLogin($loginName);</script>";
 					} else {
 						mysqli_free_result($rs);
 						mysqli_close($conn);
@@ -162,7 +176,7 @@
 		$login = <<<EOD
 	<h1><img src="images/gear.png" width=32px> Spare Order System</h1>
 	<div id="main">
-		<form method="POST" action="$_SERVER[PHP_SELF]" id="loginForm" name="loginForm" value="1">
+		<form method="POST" action="$_SERVER[PHP_SELF]" id="loginForm" name="loginForm">
 			<h2>Sign In</h2>
 			<input type="text" name="loginName" placeholder="DealerID or Email" value="%s">
 	<input type="text" name="pwd" placeholder="Password" id="pwd">
