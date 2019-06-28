@@ -7,7 +7,38 @@
 	<link rel="icon" href="favicon.ico" type="image/x-icon" />
 	<link href="css/font.css" rel="stylesheet" type="text/css" />
 	<link href="css/button.css" rel="stylesheet" type="text/css" />
-	<script src="js/jquery-1.10.1.js"></script>
+	<script src="js/jquery-3.4.1.min.js"></script>
+	<script>
+		/*
+		function dealerLogin(name) {
+			$.ajax({
+				url: 'dealer_index.php',
+				type: 'POST',
+				data: test='text',
+				//processData: false,
+				success: function(response) {
+					window.location.href = 'dealer_index.php';
+					alert('success');
+				}
+
+			});
+			//window.location.href = 'dealer_index.php';
+			/*jQuery.ajax({
+				url: 'dealer_index.php',
+				type: 'POST',
+				data: {
+					loginName: name
+				},
+				error: function(xhr) {
+					alert('Something is wrong');
+				},
+				success: function(response) {
+					window.location.href = 'dealer_index.php';
+				}
+			});
+
+		}*/
+	</script>
 	<style>
 		a:active {
 			background-color: #a9c4f5;
@@ -89,24 +120,6 @@
 			width: 200px;
 		}
 	</style>
-	<script>
-		function dealerLogin(name) {
-			$.ajax({
-				type: 'POST',
-				url: 'dealer_index.php',
-				data: {
-					loginName: name,
-					a:"b"
-				},
-				error: function() {
-					alert('Something is  wrong');
-				},
-				success: function(data) {
-					window.location.href = "dealer_index.php";
-				}
-			})
-		}
-	</script>
 </head>
 
 <body class=font>
@@ -115,7 +128,6 @@
 		if (!empty($_POST['loginName']) && !empty($_POST['pwd'])) {
 			extract($_POST);
 			if (!empty($remember)) {
-
 				setcookie("loginName", $loginName, time() + (7 * 24 * 60 * 60));
 			} else {
 				if (isset($_COOKIE["loginName"])) {
@@ -134,7 +146,11 @@
 					if ($pwd == $rc['password']) {
 						mysqli_free_result($rs);
 						mysqli_close($conn);
-						echo "<script> dealerLogin($loginName);</script>";
+						session_start();
+						session_unset();
+						$_SESSION['loginName']=$loginName;
+						header("Location:dealer_index.php");
+						//echo "<script> dealerLogin($loginName);</script>";
 					} else {
 						mysqli_free_result($rs);
 						mysqli_close($conn);
@@ -157,7 +173,12 @@
 					if ($pwd == $rc['password']) {
 						mysqli_free_result($rs);
 						mysqli_close($conn);
-						header("Location:admin_index.html");
+						session_start();
+						session_unset();
+						$_SESSION['loginName']=$loginName;
+						header("Location:admin_index.php");
+						//echo "<script> dealerLogin('$loginName');</script>";
+						//header("Location:admin_index.html");
 					} else {
 						mysqli_free_result($rs);
 						mysqli_close($conn);
@@ -179,14 +200,13 @@
 		<form method="POST" action="$_SERVER[PHP_SELF]" id="loginForm" name="loginForm">
 			<h2>Sign In</h2>
 			<input type="text" name="loginName" placeholder="DealerID or Email" value="%s">
-	<input type="text" name="pwd" placeholder="Password" id="pwd">
+	<input type="password" name="pwd" placeholder="Password" id="pwd">
 	<div id="divRemember"><input type="checkbox" id="remember" name="remember" %s> Remember Me </div>
 	<div id="divCreate"><a href="create_account.html">Create Account</a></div>
 	<div id="divSubmit"><input type="submit" value="Login" id="login" class="whiteButton">
 		<br />
-		<a href="admin_index.html">Admin Login</a>
-		<a href="dealer_index.html">Dealer Login</a></div>
-
+		<a href="admin_index.php">Admin Login</a>
+		<a href="dealer_index.php">Dealer Login</a></div>
 	<br /><br />
 	</form>
 	</div>
