@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Part Editing</title>
+    <title>Part Adding</title>
     <link rel="icon" href="favicon.ico" type="image/x-icon" />
     <link href="css/font.css" rel="stylesheet" type="text/css" />
     <link href="css/index.css" rel="stylesheet" type="text/css" />
@@ -78,13 +78,13 @@
     </center>
     <br>
     <ul>
-        <li><a href="admin_index.php">Home</a></li>
-        <li><a class="active" href="part_info.php">Part Info</a></li>
-        <li><a href="order_management.php">Order Management</a></li>
-        <li><a href="index.php" onclick="return confirm('Are you sure you want to sign out?')">Log Out</a></li>
+        <li><a href="admin_index.html">Home</a></li>
+        <li><a class="active" href="part_info.html">Part Info</a></li>
+        <li><a href="order_management.html">Order Management</a></li>
+        <li><a href="index.html" onclick="return confirm('Are you sure you want to sign out?')">Log Out</a></li>
     </ul>
     <div id="main">
-        <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+        <form method="POST" action="$_SERVER[PHP_SELF]">
             <table align="center">
 
                 <?php
@@ -107,30 +107,29 @@
 
                     require_once('conn.php');
                     $_SESSION['number'] = $_GET['partNumber'];
-                    $sql = "SELECT * FROM Part WHERE partNumber = $_SESSION[number]";
+                    $sql = "SELECT MAX() FROM Part WHERE partNumber = $_SESSION[number]";
                     $rs = mysqli_query($conn, $sql);
 
                     while ($rc = mysqli_fetch_assoc($rs)) {
                         ?>
-
                         <tr>
-                            <th colspan="2" class="text=center">Part Editing</th>
+                            <th colspan="2" class="text=center">Part Adding</th>
                         <tr onmouseover="setColor(true, 'partNumber')" onmouseout="setColor(false,'partNumber')">
                             <td>Part Number</td>
-                            <td><input type="text" name="partNumber" id="partNumber" readonly="readonly" value="<?php echo $rc['partNumber']; ?>" disabled>
+                            <td><input type="text" name="partNumber" id="partNumber" readonly="readonly" value="100002" disabled>
                             </td>
                         </tr>
-                        <tr onmouseover="setColor(true, 'partName')" onmouseout="setColor(false,'partName')">
+                        <tr>
                             <td>Part Name</td>
-                            <td><input type="text" name="partName" id="partName" value="<?php echo $rc['partName']; ?>" readonly="readonly" disabled></td>
+                            <td><input type="text" name="partName"></td>
                         </tr>
                         <tr>
                             <td>Stock Quantity</td>
-                            <td><input type="text" name="qty" value="<?php echo $rc['stockQuantity']; ?>"></td>
+                            <td><input type="text" name="qty"></td>
                         </tr>
                         <tr>
                             <td>Stock Price</td>
-                            <td><input type="text" name="price" value="<?php echo $rc['stockPrice']; ?>"></td>
+                            <td><input type="text" name="price"></td>
                         </tr>
                     <?php }
                     mysqli_free_result($rs);
@@ -138,12 +137,11 @@
                 } ?>
             </table>
             <div id="divButton">
-                <input type="submit" class="whiteButton" name="edit" id="edit" value="Update">
+                <input type="submit" class="whiteButton" name="add" id="add" value="Add" onclick="return confirm('Are you sure you want to add part?')">
                 <input type="button" class="whiteButton" name="cancel" id="cancel" value="Cancel" onclick="window.location.href='part_info.html'">
             </div>
         </form>
     </div>
 </body>
-
 
 </html>

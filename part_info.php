@@ -51,9 +51,9 @@
     </center>
     <br>
     <ul>
-        <li><a href="admin_index.html">Home</a></li>
+        <li><a href="admin_index.php">Home</a></li>
         <li><a class="active" href="part_info.php">Part Info</a></li>
-        <li><a href="order_management.html">Order Management</a></li>
+        <li><a href="order_management.php">Order Management</a></li>
         <li><a href="index.php" onclick="return confirm('Are you sure you want to sign out?')">Log Out</a></li>
     </ul>
     <br>
