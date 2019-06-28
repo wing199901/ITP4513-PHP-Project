@@ -73,6 +73,7 @@
 </head>
 
 <body class="font">
+    
     <center>
         <h1><img src="images/gear.png" width=32px> Spare Order System</h1>
     </center>
@@ -90,8 +91,7 @@
                     <th colspan="2" class="text=center">Part Editing</th>
                 <tr onmouseover="setColor(true, 'partNumber')" onmouseout="setColor(false,'partNumber')">
                     <td>Part Number</td>
-                    <td><input type="text" name="partNumber" id="partNumber" readonly="readonly" value="100001"
-                            disabled>
+                    <td><input type="text" name="partNumber" id="partNumber" readonly="readonly" value="100001" disabled>
                     </td>
                 </tr>
                 <tr onmouseover="setColor(true, 'partName')" onmouseout="setColor(false,'partName')">
@@ -109,9 +109,8 @@
 
             </table>
             <div id="divButton">
-                <input type="submit" class="whiteButton" name="edit" id="edit" value="Edit" onclick="return confirm('Are you sure you want to edit part?')">
-                <input type="button" class="whiteButton" name="cancel" id="cancel" value="Cancel"
-                    onclick="window.location.href='part_info.html'">
+                <input type="submit" class="whiteButton" name="edit" id="edit" value="Update" onclick="return confirm('Are you sure you want to edit part?')">
+                <input type="button" class="whiteButton" name="cancel" id="cancel" value="Cancel" onclick="window.location.href='part_info.html'">
             </div>
         </form>
     </div>

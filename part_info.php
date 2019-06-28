@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <script src="js/jquery.min.js"></script>
-
+    <script src="jquery.redirect.js"></script>
 
     <style>
         table {
@@ -153,23 +153,13 @@
             });
         }
     });
-
+</script>
+<script>
     $(".edit").click(function() {
         var id = $(this).parents("tr").attr("id");
         if (confirm('Are you sure to edit this part?')) {
-            $.ajax({
-                url: 'part_edit.php',
-                type: 'GET',
-                data: {
-                    partNumber: id
-                },
-                error: function() {
-                    alert('Something is wrong');
-                },
-                success: function(data) {
-                    alert("Part edited successfully");
-                    window.location.href = "part_edit.php";
-                }
+            $.redirect(part_edit.php, {
+                partNumber: id
             });
         }
     });
