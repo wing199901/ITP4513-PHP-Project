@@ -74,7 +74,20 @@
         </li>
     </ul>
     <br>
-
+    <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+        <div>
+            <table align="center" id="myTable">
+            <thead><tr>
+            <th>Part Number</th>
+            <th>Email</th>
+            <th>Part Name</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Status</th>
+            <th>Purchase</th>
+            </tr>
+            </thead>
+            <tbody> 
 
     <?php
 
@@ -83,21 +96,20 @@
     $rs = mysqli_query($conn, $sql);
 
     if (isset($_POST['submit'])) {
-        //echo "<script>alert('submit');</script>";
         $confirm_message = "";
         while ($rc = mysqli_fetch_assoc($rs)) {
             if ($_POST[$rc['partNumber']] != "") {
                 $confirm_message .= "$rc[partName]:\t";
-                $tmp = "$rc[partNumber]";
+              $tmp = "$rc[partNumber]";
                 $confirm_message .= "$_POST[$tmp]\n";
                 echo $confirm_message;
-                echo'<script>alert("' .$confirm_message. '");</script>';
+                //echo "<script>alert('$confirm_message');</script>";
             }
         }
     } else {
 
-        $show = <<<EOD
-        <form method="POST" action="$_SERVER[PHP_SELF]" onSubmit="return validateForm()">
+       /* $form = <<<EOD
+        <form method="POST" action="$_SERVER[PHP_SELF]">
         <div>
             <table align="center" id="myTable">
             <thead><tr>
@@ -111,38 +123,43 @@
             </tr>
             </thead>
             <tbody>            
-EOD;
+EOD;*/
         while ($rc = mysqli_fetch_assoc($rs)) {
-            $show .= "<tr>
+            $form = "<tr>
             <td>$rc[partNumber]</td>
             <td>$rc[email]</td>
             <td>$rc[partName]</td>
             <td>$rc[stockQuantity]</td>
             <td>$rc[stockPrice]</td>
             <td>Status</td>
-            <td><input type='text' name=$rc[partNumber] id='purchase'></td>
+            <td><input type='text' name='$rc[partNumber]' id='$rc[partNumber]'></td>
             </tr>";
+            echo $form;
         }
-        $show .= "</tbody></table>";
-        $show .= '</tbody></table></div><br>
-        <div class="submit">Delivery Address:<input type="text" name="Address" value="My address">&emsp;
-        <input class="whiteButton" type="submit" name="submit" onclick="return confirm("Are you sure you want to place order?");">&emsp;
-        <input class="whiteButton" type="reset"></div>
-        </form>';
-        echo $show;
+       /* $form .= '</tbody></table></div><br>
+        <div class=\'submit\'>Delivery Address:<input type=\'text\' name=\'Address\' value=\'My address\'>&emsp;
+        <input class=\'whiteButton\' type=\'submit\' name=\'submit\' '."onclick='return alert('Are you sure you want to place order?');'>".'&emsp;
+        <input class=\'whiteButton\' type=\'reset\'></div>
+        </form>';*/
+        
 
         mysqli_free_result($rs);
         mysqli_close($conn);
     }
     ?>
-
-    <script>
+    </tbody></table></div><br>
+        <div class='submit'>Delivery Address:<input type='text' name='Address' value='My address'>&emsp;
+        <input class='whiteButton' type='submit' name='submit' onclick="return confirm('Are you sure you want to place order?');">&emsp;
+        <input class='whiteButton' type='reset'></div>
+        </form>
+   <!-- <script>
         function validateForm() {
             alert("By ticking this box you agree that you have clearly read this document according to our terms and conditions and agree to digitally sign the document.");
-            var sql = "<?php echo $sql; ?>";
+            var sql = "//<?php //echo $sql; 
+                            ?>";
             alert(sql);
         }
-    </script>
+    </script>-->
 </body>
 
 </html>
