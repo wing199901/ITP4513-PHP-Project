@@ -8,10 +8,9 @@
     <link href="css/index.css" rel="stylesheet" type="text/css" />
     <link href="css/table.css" rel="stylesheet" type="text/css" />
     <link href="css/button.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="css/all.css" rel="stylesheet" type="text/css" />
 
     <script src="js/jquery.min.js"></script>
-    <script src="js/jquery.redirect.js"></script>
 
     <style>
         table {
@@ -127,7 +126,8 @@
                     <?php }
                 }
                 mysqli_free_result($rs);
-                mysqli_close($conn); ?>
+                mysqli_close($conn);
+                ?>
             </table>
             <br>
         </form>

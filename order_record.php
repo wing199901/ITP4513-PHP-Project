@@ -41,13 +41,13 @@
 
   <script>
     function show(hideItems) {
-      for (var i = 0; i < document.getElementsByClassName(hideItems).length; i++){
+      for (var i = 0; i < document.getElementsByClassName(hideItems).length; i++) {
         if (document.getElementsByClassName(hideItems)[i].style.display == 'table-row') {
           document.getElementsByClassName(hideItems)[i].style.display = 'none';
         } else {
           document.getElementsByClassName(hideItems)[i].style.display = 'table-row';
         }
-    }
+      }
     }
   </script>
 </head>
