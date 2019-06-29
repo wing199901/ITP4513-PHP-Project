@@ -28,7 +28,7 @@
   $sql = "SELECT firstName,lastName FROM Administrator where email = '$email'";
   $rs = mysqli_query($conn, $sql);
   $rc = mysqli_fetch_assoc($rs);
-  printf("<h1 style='text-align: center;font-size: 50px;margin-top:200px;color: grey;'>Welcome %s</h1>", $rc['lastName'] . " " . $rc['firstName']);
+  printf("<h1 style='text-align: center;font-size: 50px;margin-top:200px;color: grey;'>Welcome %s</h1>", $rc['firstName'] . " " . $rc['lastName']);
   mysqli_free_result($rs);
   mysqli_close($conn);
   ?>

@@ -119,10 +119,20 @@
             <input type="submit" class="whiteButton" name="update" id="update" value="Update" onclick="return confirm('Are you sure to update your personal information?')">
         </form>
 EOD;
-        printf($form, $dealerID, $rc['name'],$rc['phoneNumber'],$rc['address']);
-        extract($_POST);
-        $sql = "update Dealer set name='$name',  phoneNumber='$tel', address='$address'";
-        //Use 8 or more characters with a mix of letters, numbers & symbols
+        printf($form, $dealerID, $rc['name'], $rc['phoneNumber'], $rc['address']);
+        if (isset($_POST['update'])) {
+            extract($_POST);
+            $sql = "update Dealer set name='$name',  phoneNumber='$tel', address='$address'";
+            if (!empty($password) && !empty($rePassword)) {
+                if ($password != $rePassword)
+                    echo "<script>alert('Those passwords didn\'t match. Try again.');window.location.href='acc_info.php';</script>";
+                if (strlen($_POST['pwd']) < 8){
+                    echo "<script>alert('Use 8 or more characters with a mix of letters, numbers & symbols.');window.location.href='acc_info.php';</script>";
+                }
+            }
+            //Use 8 or more characters with a mix of letters, numbers & symbols
+            // || !preg_match("#[0-9]+#", $pwd)||!preg_match("#[a-zA-Z]+#", $pwd)||!preg_match("#[\W]+#",$pwd)
+        }
         ?>
     </div>
 </body>
