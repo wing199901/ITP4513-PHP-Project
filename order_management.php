@@ -8,7 +8,7 @@
     <link href="css/index.css" rel="stylesheet" type="text/css" />
     <link href="css/table.css" rel="stylesheet" type="text/css" />
     <link href="css/button.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="css/all.css" rel="stylesheet" type="text/css" />
 
     <style>
         table {
@@ -41,11 +41,12 @@
 
     <script>
         function show(hideItems) {
-
-            if (document.getElementById(hideItems).style.display == 'table-row') {
-                document.getElementById(hideItems).style.display = 'none';
-            } else {
-                document.getElementById(hideItems).style.display = 'table-row';
+            for (var i = 0; i < document.getElementsByClassName(hideItems).length; i++) {
+                if (document.getElementsByClassName(hideItems)[i].style.display == 'table-row') {
+                    document.getElementsByClassName(hideItems)[i].style.display = 'none';
+                } else {
+                    document.getElementsByClassName(hideItems)[i].style.display = 'table-row';
+                }
             }
         }
     </script>
@@ -58,16 +59,16 @@
     </center>
     <br>
     <ul>
-        <li><a href="admin_index.html">Home</a></li>
-        <li><a href="part_info.html">Part Info</a></li>
-        <li><a class="active" href="order_management.html">Order Management</a></li>
-        <li><a href="index.html" onclick="return confirm('Are you sure you want to sign out?')">Log Out</a></li>
+        <li><a href="admin_index.php">Home</a></li>
+        <li><a href="part_info.php">Part Info</a></li>
+        <li><a class="active" href="order_management.php">Order Management</a></li>
+        <li><a href="index.php" onclick="return confirm('Are you sure you want to sign out?')">Log Out</a></li>
         </div>
         </li>
     </ul>
 
     <div>
-        <form method="POST" action="$_SERVER[PHP_SELF]">
+        <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
             <div id="headerButton">
                 <input type="text" placeholder="Search Order" name="search" id="search">
                 <button type="submit"><i class="fa fa-search"></i></button><br><br>
@@ -83,31 +84,88 @@
                     <th>Status</th>
                     <th>Management</th>
                 </tr>
-                <tr>
-                    <td>100001</td>
-                    <td>100001</td>
-                    <td>Peter</td>
-                    <td>2019-6-20</td>
-                    <td>LWL</td>
-                    <td>$200</td>
-                    <td>In processing</td>
-                    <td><input class="grayButton" type="button" name="detail" value="Items" onclick="show('hi1');show('hi2');">
-                        <input class="grayButton" type="button" name="delivered" value="Ready to delivery" onclick="return confirm('Are you sure this order is ready to delivery?')">
-                        <input class="grayButton" type="button" name="cancel" value="Cancel" onclick="return confirm('Are you sure you want to cancel this order?')">
-                    </td>
-                </tr>
-                <tr id="hi1" class="hideItems">
-                    <td colspan="2">Part Number: 100001</td>
-                    <td colspan="2">Part Name: part1</td>
-                    <td colspan="2">Quantity: 10</td>
-                    <td colspan="2">Price: $10</td>
-                </tr>
-                <tr id="hi2" class="hideItems">
-                    <td colspan="2">Part Number: 100002</td>
-                    <td colspan="2">Part Name: part2</td>
-                    <td colspan="2">Quantity: 10</td>
-                    <td colspan="2">Price: $10</td>
-                </tr>
+                <?php
+                require_once('conn.php');
+                if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                    $sql = "SELECT * FROM Orders WHERE orderID LIKE '%$_POST[search]%'";
+                    $rs = mysqli_query($conn, $sql);
+                    while ($rc = mysqli_fetch_assoc($rs)) {
+                        switch ($rc['status']) {
+                            case '1';
+                                $status = "In processing";
+                                break;
+                            case '2':
+                                $status = "Delivery";
+                                break;
+                            case '3':
+                                $status = "Completed";
+                                break;
+                            case '4':
+                                $status = "Canceled";
+                                break;
+                            default:
+                                $status = "";
+                        }
+                        echo "<tr>
+                                <td><a>$rc[partNumber]</a></td>
+                                <td>$rc[partName]</td>
+                                <td>$rc[stockQuantity]</td>
+                                <td>$rc[stockPrice]</td>
+                                <td>$status</td>
+                                <td>$rc[email]</td>
+                                <td><button class='grayButton edit'>Edit</button>
+                                <button class='grayButton remove'>Remove</button>
+                                </td>
+                            </tr>";
+                    }
+                } else {
+                    $sql = "SELECT * FROM Orders, Dealer";
+                    $rs = mysqli_query($conn, $sql);
+
+                    while ($rc = mysqli_fetch_assoc($rs)) {
+
+                        switch ($rc['status']) {
+                            case '1';
+                                $status = "In processing";
+                                break;
+                            case '2':
+                                $status = "Delivery";
+                                break;
+                            case '3':
+                                $status = "Completed";
+                                break;
+                            case '4':
+                                $status = "Canceled";
+                                break;
+                            default:
+                                $status = "";
+                        }
+                        ?>
+                        <tr id="<?php echo $rc['orderID'] ?>">
+                            <td><?php echo $rc['orderID'] ?></td>
+                            <td><?php echo $rc['dealerID'] ?></td>
+                            <td><?php echo $rc['name'] ?></td>
+                            <td><?php echo $rc['orderDate'] ?></td>
+                            <td><?php echo $rc['deliveryAddress'] ?></td>
+                            <td>$200</td>
+                            <td><?php echo $status ?></td>
+                            <td><input class="grayButton" type="button" name="detail" value="Items" onclick="show('hideItems');">
+                                <input class="grayButton" type="button" name="delivered" value="Ready to delivery" onclick="return confirm('Are you sure this order is ready to delivery?')">
+                                <input class="grayButton" type="button" name="cancel" value="Cancel" onclick="return confirm('Are you sure you want to cancel this order?')">
+                            </td>
+                        </tr>
+                    <?php }
+                    mysqli_free_result($rs);
+                    mysqli_close($conn);
+                    ?><tr class="hideItems">
+                        <td colspan="2">Part Number: 100001</td>
+                        <td colspan="2">Part Name: part1</td>
+                        <td colspan="2">Quantity: 10</td>
+                        <td colspan="2">Price: $10</td>
+                    </tr>
+                <?php
+                }
+                ?>
             </table>
             <br>
         </form>
