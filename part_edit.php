@@ -111,24 +111,22 @@
             <table align="center">
 
                 <?php
+                require_once('conn.php');
                 session_start();
                 $email = $_SESSION['loginName'];
 
                 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                    require_once('conn.php');
+
                     $sql = "Update `Part` set `email` = '" . $email . "',`stockQuantity` = '" . $_POST['qty'] . "',`stockPrice` = '" . $_POST['price'] . "'Where `partNumber`='" . $_SESSION['number'] . "' ";
 
-                    if (mysqli_query($conn, $sql)) {
+                    if ($rs = mysqli_query($conn, $sql)) {
                         echo "<script>alert('Record was updated successfully.');</script>";
                         header("Location:part_info.php");
                     } else {
                         echo "ERROR: Could not able to execute $sql. "
                             . mysqli_error($conn);
                     }
-                    mysqli_close($conn);
                 } else {
-
-                    require_once('conn.php');
                     $_SESSION['number'] = $_GET['partNumber'];
                     $sql = "SELECT * FROM Part WHERE partNumber = $_SESSION[number]";
                     $rs = mysqli_query($conn, $sql);

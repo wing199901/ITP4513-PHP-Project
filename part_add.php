@@ -106,63 +106,64 @@
         <li><a href="index.php" onclick="return confirm('Are you sure you want to sign out?')">Log Out</a></li>
     </ul>
     <div id="main">
-        <form method="POST" action="$_SERVER[PHP_SELF]" onsubmit="return InputFieldValidations(this)">
+        <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" onsubmit="return InputFieldValidations(this)">
             <table align="center">
 
                 <?php
-
                 session_start();
                 $email = $_SESSION['loginName'];
 
                 if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     require_once('conn.php');
-                    $sql = "Update `Part` set `email` = '" . $email . "',`stockQuantity` = '" . $_POST['qty'] . "',`stockPrice` = '" . $_POST['price'] . "'Where `partNumber`='" . $_SESSION['number'] . "' ";
+                    $name = $_POST['partName'];
+                    $sql = "INSERT INTO Part(email, partName, stockQuantity, stockPrice, stockStatus) VALUES('$email', '$_POST[partName]', $_POST[qty], $_POST[price], 1)";
 
                     if (mysqli_query($conn, $sql)) {
                         echo "<script>alert('Record was updated successfully.');</script>";
-                        header("Location:part_info.php");
+                        $sql = "SELECT * FROM Part WHERE partName = '$name'";
+                        $rs = mysqli_query($conn, $sql);
+                        while ($rc = mysqli_fetch_assoc($rs)) {
+                            printf(
+                                "<script>alert('Result:\\nPart Number: %s\\nPart Name: %s\\nPart Quantity: %s\\nPart Price: %s');window.location.href='part_info.php';</script>",
+                                $rc['partNumber'],
+                                $rc['partName'],
+                                $rc['stockQuantity'],
+                                $rc['stockPrice']
+                            );
+                        }
+                        mysqli_free_result($rs);
+                        mysqli_close($conn);
                     } else {
-                        echo "ERROR: Could not able to execute $sql. "
-                            . mysqli_error($conn);
+                        $sql = "SELECT MAX(partNumber) AS max_number FROM Part ";
+                        $rs = mysqli_query($conn, $sql);
+                        while ($rc = mysqli_fetch_assoc($rs)) {
+                            $sql = "ALTER TABLE Part AUTO_INCREMENT = $rc[max_number]";
+                            mysqli_query($conn, $sql);
+                        }
+                        mysqli_free_result($rs);
+                        mysqli_close($conn);
+                        echo "<script>alert('Part Name was been used. Please try again');window.location.href='part_add.php';</script>";
                     }
-                    mysqli_close($conn);
-                } else {
-
-                    require_once('conn.php');
-                    $sql = "SELECT MAX(partNumber) AS max_partNumber FROM Part ";
-                    $rs = mysqli_query($conn, $sql);
-
-                    while ($rc = mysqli_fetch_assoc($rs)) {
-                        ?>
-                        <tr>
-                            <th colspan="2" class="text=center">Part Adding</th>
-                        </tr>
-                        <tr onmouseover="setColor(true, 'partNumber')" onmouseout="setColor(false,'partNumber')">
-                            <td>Part Number</td>
-                            <td><input type="text" name="partNumber" id="partNumber" readonly="readonly" value="<?php $max = $rc["max_partNumber"] + 1;
-                                                                                                                echo $max; ?>" disabled>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Part Name</td>
-                            <td><input type="text" name="partName"></td>
-                        </tr>
-                        <tr>
-                            <td>Stock Quantity</td>
-                            <td><input type="text" name="qty"></td>
-                        </tr>
-                        <tr>
-                            <td>Stock Price</td>
-                            <td><input type="text" name="price"></td>
-                        </tr>
-                    <?php }
-                    $time = time();
-                    $sql = "INSERT INTO Part(partNumber, email, partName) VALUES($max_partNumber'$email','$time')";
-                    mysqli_query($conn, $sql);
                 }
-                mysqli_free_result($rs);
-                mysqli_close($conn);
                 ?>
+                <tr>
+                    <th colspan="2" class="text=center">Part Adding</th>
+                </tr>
+                <tr onmouseover="setColor(true, 'partNumber')" onmouseout="setColor(false,'partNumber')">
+                </tr>
+                <tr>
+                    <td>Part Name</td>
+                    <td><input type="text" name="partName"></td>
+                </tr>
+                <tr>
+                    <td>Stock Quantity</td>
+                    <td><input type="text" name="qty" pattern="^[\d]*$"></td>
+                </tr>
+                <tr>
+                    <td>Stock Price</td>
+                    <td><input type="text" name="price" pattern="^[\d]*$"></td>
+                </tr>
+
             </table>
             <div id="divButton">
                 <input type="submit" class="whiteButton" name="add" id="add" value="Add" onclick="return confirm('Are you sure you want to add part?')">
