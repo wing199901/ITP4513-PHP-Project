@@ -87,7 +87,7 @@
                 <?php
                 require_once('conn.php');
                 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                    $sql = "SELECT * FROM Orders WHERE orderID LIKE '%$_POST[search]%'";
+                    $sql = "SELECT * FROM Orders, Dealer WHERE orderID LIKE '%$_POST[search]%'";
                     $rs = mysqli_query($conn, $sql);
                     while ($rc = mysqli_fetch_assoc($rs)) {
                         switch ($rc['status']) {
@@ -106,17 +106,38 @@
                             default:
                                 $status = "";
                         }
-                        echo "<tr>
-                                <td><a>$rc[partNumber]</a></td>
-                                <td>$rc[partName]</td>
-                                <td>$rc[stockQuantity]</td>
-                                <td>$rc[stockPrice]</td>
-                                <td>$status</td>
-                                <td>$rc[email]</td>
-                                <td><button class='grayButton edit'>Edit</button>
-                                <button class='grayButton remove'>Remove</button>
+                        echo "<tr id='$rc[orderID] '>
+                                <td> $rc[orderID] </td>
+                                <td> $rc[dealerID] </td>
+                                <td> $rc[name] </td>
+                                <td> $rc[orderDate] </td>
+                                <td> $rc[deliveryAddress] </td>
+                                <td>$200</td>
+                                <td>$status </td>
+                                <td><input class='grayButton' type='button' name='detail' value='Items' onclick='show('hideItems');'>
+                                    <input class='grayButton' type='button' name='delivered' value='Ready to delivery' onclick='return confirm('Are you sure this order is ready to delivery?')'>
+                                    <input class='grayButton' type='button' name='cancel' value='Cancel' onclick='return confirm('Are you sure you want to cancel this order?')'>
                                 </td>
-                            </tr>";
+                                </tr>";
+
+                        $sql = "SELECT * FROM OrderPart WHERE orderID = $rc[orderID]";
+                        $rs = mysqli_query($conn, $sql) or die(mysqli_error($conn));
+
+                        while ($rc = mysqli_fetch_assoc($rs)) {
+                            echo "<tr class='hideItems'>
+                                    <td colspan='2'>Part Number: $rc[partNumber]</td>
+                                    <td colspan='2'>Part Name: ";
+                            $sql = " SELECT partName FROM Part WHERE partNumber = $rc[partNumber]";
+                            $result = mysqli_query($conn, $sql);
+                            while ($row = mysqli_fetch_assoc($result)) {
+                                echo $row['partName'];
+                            }
+                            mysqli_free_result($result);
+                            echo "</td>
+                                    <td colspan='2'>Quantity: $rc[quantity]</td>
+                                    <td colspan='2>'Price: $$rc[price]</td>
+                                    </tr>";
+                        }
                     }
                 } else {
                     $sql = "SELECT * FROM Orders, Dealer";
@@ -154,17 +175,29 @@
                                 <input class="grayButton" type="button" name="cancel" value="Cancel" onclick="return confirm('Are you sure you want to cancel this order?')">
                             </td>
                         </tr>
-                    <?php }
-                    mysqli_free_result($rs);
-                    mysqli_close($conn);
-                    ?><tr class="hideItems">
-                        <td colspan="2">Part Number: 100001</td>
-                        <td colspan="2">Part Name: part1</td>
-                        <td colspan="2">Quantity: 10</td>
-                        <td colspan="2">Price: $10</td>
-                    </tr>
-                <?php
+                        <?php
+                        $sql = "SELECT * FROM OrderPart WHERE orderID = $rc[orderID]";
+                        $rs = mysqli_query($conn, $sql);
+
+                        while ($rc = mysqli_fetch_assoc($rs)) {
+                            ?><tr class="hideItems">
+                                <td colspan="2">Part Number: <?php echo $rc['partNumber'] ?></td>
+                                <td colspan="2">Part Name: <?php $sql = "SELECT partName FROM Part WHERE partNumber = $rc[partNumber]";
+                                                            $result = mysqli_query($conn, $sql);
+                                                            while ($row = mysqli_fetch_assoc($result)) {
+                                                                echo $row['partName'];
+                                                            }
+                                                            //mysqli_free_result($result); 
+                                                            ?></td>
+                                <td colspan="2">Quantity: <?php echo $rc['quantity'] ?></td>
+                                <td colspan="2">Price: $<?php echo $rc['price'] ?></td>
+                            </tr>
+                        <?php
+                        }
+                        //mysqli_free_result($rs);
+                    }
                 }
+                //mysqli_close($conn);
                 ?>
             </table>
             <br>

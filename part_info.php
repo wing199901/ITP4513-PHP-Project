@@ -87,7 +87,7 @@
                         } else {
                             $status = "Unavailable";
                         }
-                        echo "<tr>
+                        echo "<tr id=' $rc[partNumber]'>
                                 <td><a>$rc[partNumber]</a></td>
                                 <td>$rc[partName]</td>
                                 <td>$rc[stockQuantity]</td>
