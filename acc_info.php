@@ -75,13 +75,16 @@
         <li><a href="make_order.php">Make Order</a></li>
         <li><a href="order_record.html">Order Record</a></li>
         <li><a class="active" href="acc_info.html">Account Info</a></li>
-        <li><a href="index.html" onclick="return confirm('Are you sure you want to sign out?')">Log Out</a></li>
+        <li><a href="index.php" onclick="return confirm('Are you sure you want to sign out?')">Log Out</a></li>
     </ul>
     <div id="main">
         <?php
         session_start();
         $dealerID = $_SESSION['loginName'];
-
+        require_once('conn.php');
+        $sql = "select * from Dealer where dealerID='$dealerID'";
+        $rs = mysqli_query($conn, $sql);
+        $rc = mysqli_fetch_assoc($rs);
         $form = <<<EOD
         <form method="POST" action="$_SERVER[PHP_SELF]">
             <table align="center">
@@ -89,20 +92,20 @@
                     <th colspan="2" class="text=center">Account Information</th>
                 <tr onmouseover="setColor(true, 'accountId')" onmouseout="setColor(false,'accountId')">
                     <td>Account ID</td>
-                    <td><input type="text" name="accountId" id="accountId" readonly="readonly" value="100001" disabled>
+                    <td><input type="text" name="accountId" id="accountId" readonly="readonly" value="%s" disabled>
                     </td>
                 </tr>
                 <tr>
                     <td>Name</td>
-                    <td><input type="text" name="name" value="Peter"></td>
+                    <td><input type="text" name="name" value="%s"></td>
                 </tr>
                 <tr>
                     <td>Phone Number</td>
-                    <td><input type="text" name="tel" value="88888888"></td>
+                    <td><input type="text" name="tel" value="%s"></td>
                 </tr>
                 <tr>
                     <td>Address</td>
-                    <td><input type="text" name="address" id="address" value="LWL"></td>
+                    <td><input type="text" name="address" id="address" value="%s"></td>
                 </tr>
                 <tr>
                     <td>Password</td>
@@ -116,7 +119,10 @@
             <input type="submit" class="whiteButton" name="update" id="update" value="Update" onclick="return confirm('Are you sure to update your personal information?')">
         </form>
 EOD;
-        printf($form);
+        printf($form, $dealerID, $rc['name'],$rc['phoneNumber'],$rc['address']);
+        extract($_POST);
+        $sql = "update Dealer set name='$name',  phoneNumber='$tel', address='$address'";
+        //Use 8 or more characters with a mix of letters, numbers & symbols
         ?>
     </div>
 </body>
