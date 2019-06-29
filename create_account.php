@@ -98,6 +98,13 @@
             float: right;
             margin-right: 175px;
         }
+        a {
+			color: cornflowerblue;
+			text-decoration: none;
+            float: right;
+            margin-top:15px;
+            margin-right: 45px;
+		}
     </style>
 </head>
 
@@ -144,7 +151,7 @@
             <input type="password" name="pwd" id="pwd" pattern="(?=^.{8,}$)(?=.*\d)(?=.*\W+)(?![.\n])(?=.*[A-Za-z]).*$" title="Use 8 or more characters with a mix of letters, numbers & symbols" required>
             <input type="password" name="confirmPwd" id="confirmPwd" pattern="(?=^.{8,}$)(?=.*\d)(?=.*\W+)(?![.\n])(?=.*[A-Za-z]).*$" title="Use 8 or more characters with a mix of letters, numbers & symbols" required><br /><br /><br />
             <p name="hint">Use 8 or more characters with a mix of letters, numbers & symbols</p>
-            <div id="divSubmit"><input type="submit" value="Register" id="register" class="whiteButton"></div>
+            <div id="divSubmit"><input type="submit" value="Register" id="register" class="whiteButton"><br/><a href="index.php">Previous</a></div>
             <br /><br />
         </form>
     </div>
