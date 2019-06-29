@@ -77,9 +77,8 @@
                     <th>Management</th>
                 </tr>
                 <?php
-
+                require_once('conn.php');
                 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                    require_once('conn.php');
                     $sql = "SELECT * FROM Part WHERE partNumber LIKE '%$_POST[search]%' OR partName LIKE '%$_POST[search]%'";
                     $rs = mysqli_query($conn, $sql);
                     while ($rc = mysqli_fetch_assoc($rs)) {
@@ -102,7 +101,6 @@
                             </tr>";
                     }
                 } else {
-                    require_once('conn.php');
                     $sql = "SELECT * FROM Part";
                     $rs = mysqli_query($conn, $sql);
 
@@ -151,6 +149,7 @@
                 },
                 success: function(data) {
                     alert("Part removed successfully");
+                    document.location.reload();
                 }
             });
         }
@@ -158,9 +157,9 @@
 </script>
 <script>
     $(".edit").click(function() {
-        var id = $(this).parents("tr").attr("id");
+        var partName = $(this).parents("tr").attr("id");
         if (confirm('Are you sure to edit this part?')) {
-            document.location.href = "part_edit.php?partNumber=" + id;
+            document.location.href = "part_edit.php?partNumber=" + partName;
         }
         return false;
     });
