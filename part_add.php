@@ -69,6 +69,28 @@
                 document.getElementById(id).style.backgroundColor = "white";
 
         }
+
+        function InputFieldValidations(theForm) {
+
+            if (theForm.partName.value == "") {
+                alert("Please Enter the Part Name.");
+                theForm.partName.focus();
+                return (false);
+            }
+
+            if (theForm.qty.value == "") {
+                alert("Please Enter the Part Quantity.");
+                theForm.qty.focus();
+                return (false);
+            }
+
+            if (theForm.price.value == "") {
+                alert("Please Enter the Part Price.");
+                theForm.price.focus();
+                return (false);
+            }
+            return true;
+        }
     </script>
 </head>
 
@@ -78,16 +100,17 @@
     </center>
     <br>
     <ul>
-        <li><a href="admin_index.html">Home</a></li>
-        <li><a class="active" href="part_info.html">Part Info</a></li>
-        <li><a href="order_management.html">Order Management</a></li>
-        <li><a href="index.html" onclick="return confirm('Are you sure you want to sign out?')">Log Out</a></li>
+        <li><a href="admin_index.php">Home</a></li>
+        <li><a class="active" href="part_info.php">Part Info</a></li>
+        <li><a href="order_management.php">Order Management</a></li>
+        <li><a href="index.php" onclick="return confirm('Are you sure you want to sign out?')">Log Out</a></li>
     </ul>
     <div id="main">
-        <form method="POST" action="$_SERVER[PHP_SELF]">
+        <form method="POST" action="$_SERVER[PHP_SELF]" onsubmit="return InputFieldValidations(this)">
             <table align="center">
 
                 <?php
+
                 session_start();
                 $email = $_SESSION['loginName'];
 
@@ -106,17 +129,18 @@
                 } else {
 
                     require_once('conn.php');
-                    $_SESSION['number'] = $_GET['partNumber'];
-                    $sql = "SELECT MAX() FROM Part WHERE partNumber = $_SESSION[number]";
+                    $sql = "SELECT MAX(partNumber) AS max_partNumber FROM Part ";
                     $rs = mysqli_query($conn, $sql);
 
                     while ($rc = mysqli_fetch_assoc($rs)) {
                         ?>
                         <tr>
                             <th colspan="2" class="text=center">Part Adding</th>
+                        </tr>
                         <tr onmouseover="setColor(true, 'partNumber')" onmouseout="setColor(false,'partNumber')">
                             <td>Part Number</td>
-                            <td><input type="text" name="partNumber" id="partNumber" readonly="readonly" value="100002" disabled>
+                            <td><input type="text" name="partNumber" id="partNumber" readonly="readonly" value="<?php $max = $rc["max_partNumber"] + 1;
+                                                                                                                echo $max; ?>" disabled>
                             </td>
                         </tr>
                         <tr>
@@ -132,9 +156,13 @@
                             <td><input type="text" name="price"></td>
                         </tr>
                     <?php }
-                    mysqli_free_result($rs);
-                    mysqli_close($conn);
-                } ?>
+                    $time = time();
+                    $sql = "INSERT INTO Part(partNumber, email, partName) VALUES($max_partNumber'$email','$time')";
+                    mysqli_query($conn, $sql);
+                }
+                mysqli_free_result($rs);
+                mysqli_close($conn);
+                ?>
             </table>
             <div id="divButton">
                 <input type="submit" class="whiteButton" name="add" id="add" value="Add" onclick="return confirm('Are you sure you want to add part?')">
