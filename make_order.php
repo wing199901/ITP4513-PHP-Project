@@ -62,15 +62,15 @@
     </center>
     <br>
     <ul>
-        <li><a href="dealer_index.html">Home</a>
+        <li><a href="dealer_index.php">Home</a>
         </li>
         <li><a class="active" href="make_order.php">Make Order</a>
         </li>
-        <li><a href="order_record.html">Order Record</a>
+        <li><a href="order_record.php">Order Record</a>
         </li>
-        <li><a href="acc_info.html">Account Info</a>
+        <li><a href="acc_info.php">Account Info</a>
         </li>
-        <li><a href="index.html" onclick="return confirm('Are you sure you want to sign out?')">Log Out</a>
+        <li><a href="index.php" onclick="return confirm('Are you sure you want to sign out?')">Log Out</a>
         </li>
     </ul>
     <br>
