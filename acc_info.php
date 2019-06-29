@@ -86,7 +86,7 @@
         $rs = mysqli_query($conn, $sql);
         $rc = mysqli_fetch_assoc($rs);
         $form = <<<EOD
-        <form method="POST" action="$_SERVER[PHP_SELF]">
+        <form method="POST" action="$_SERVER[PHP_SELF]" onsubmit="return confirm('Are you sure to update your personal information?')"  >
             <table align="center">
                 <tr>
                     <th colspan="2" class="text=center">Account Information</th>
@@ -97,26 +97,26 @@
                 </tr>
                 <tr>
                     <td>Name</td>
-                    <td><input type="text" name="name" value="%s"></td>
+                    <td><input type="text" name="name" value="%s" pattern="^[A-Za-z ]*$" required></td>
                 </tr>
                 <tr>
                     <td>Phone Number</td>
-                    <td><input type="text" name="tel" value="%s"></td>
+                    <td><input type="text" name="tel" value="%s" pattern="^[0-9]{8}$" required></td>
                 </tr>
                 <tr>
                     <td>Address</td>
-                    <td><input type="text" name="address" id="address" value="%s"></td>
+                    <td><input type="text" name="address" id="address" value="%s" required></td>
                 </tr>
                 <tr>
                     <td>Password</td>
-                    <td><input type="password" name="password" style="border-style:none"></td>
+                    <td><input type="password" name="password" style="border-style:none" pattern="(?=^.{8,}$)(?=.*\d)(?=.*\W+)(?![.\n])(?=.*[A-Za-z]).*$" title="Use 8 or more characters with a mix of letters, numbers & symbols"></td>
                 </tr>
                 <tr>
                     <td>Re-type Password</td>
-                    <td><input type="password" name="rePassword"></td>
+                    <td><input type="password" name="rePassword" pattern="(?=^.{8,}$)(?=.*\d)(?=.*\W+)(?![.\n])(?=.*[A-Za-z]).*$" title="Use 8 or more characters with a mix of letters, numbers & symbols" ></td>
                 </tr>
             </table>
-            <input type="submit" class="whiteButton" name="update" id="update" value="Update" onclick="return confirm('Are you sure to update your personal information?')">
+            <input type="submit" class="whiteButton" name="update" id="update" value="Update" ">
         </form>
 EOD;
         printf($form, $dealerID, $rc['name'], $rc['phoneNumber'], $rc['address']);
@@ -126,12 +126,16 @@ EOD;
             if (!empty($password) && !empty($rePassword)) {
                 if ($password != $rePassword)
                     echo "<script>alert('Those passwords didn\'t match. Try again.');window.location.href='acc_info.php';</script>";
-                if (strlen($_POST['pwd']) < 8){
-                    echo "<script>alert('Use 8 or more characters with a mix of letters, numbers & symbols.');window.location.href='acc_info.php';</script>";
-                }
+                $sql .= ",password='$password'";
+            } else if (empty($password) && !empty($rePassword) || !empty($password) && empty($rePassword)) {
+                echo "<script>alert('Both password must be entered.');window.location.href='acc_info.php';</script>";
             }
-            //Use 8 or more characters with a mix of letters, numbers & symbols
-            // || !preg_match("#[0-9]+#", $pwd)||!preg_match("#[a-zA-Z]+#", $pwd)||!preg_match("#[\W]+#",$pwd)
+            $sql.="where dealerID='$dealerID'";
+            require_once('conn.php');
+            mysqli_query($conn, $sql);
+            mysqli_free_result($rs);
+            mysqli_close($conn);
+            echo "<script>alert('Account information are updated');window.location.href('acc_info.php')</script>";
         }
         ?>
     </div>

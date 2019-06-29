@@ -142,7 +142,7 @@
             <p name="hint">You can use letters, number&periods at least 8 charchers</p>
             <li class="left">Your Name</li>
             <li class="right">Phone Number</li><br /><br />
-            <input type="text" name="name" id="name" pattern="^[A-Za-z]*$" required>
+            <input type="text" name="name" id="name" pattern="^[A-Za-z ]*$" required>
             <input type="text" name="tel" id="tel" pattern="^[0-9]{8}$" required>
             <p>Address</p>
             <input type="text" name="address" id="address" required><br /><br />
