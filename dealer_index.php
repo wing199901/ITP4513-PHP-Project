@@ -18,7 +18,7 @@
     <li><a class="active" href="dealer_index.html">Home</a></li>
     <li><a href="make_order.php">Make Order</a></li>
     <li><a href="order_record.html">Order Record</a></li>
-    <li><a href="acc_info.html">Account Info</a></li>
+    <li><a href="acc_info.php">Account Info</a></li>
     <li><a href="index.php" onclick="return confirm('Are you sure you want to sign out?')">Log Out</a></li>
     </div>
     </li>

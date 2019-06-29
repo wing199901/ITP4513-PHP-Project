@@ -8,37 +8,6 @@
 	<link href="css/font.css" rel="stylesheet" type="text/css" />
 	<link href="css/button.css" rel="stylesheet" type="text/css" />
 	<script src="js/jquery-3.4.1.min.js"></script>
-	<script>
-		/*
-		function dealerLogin(name) {
-			$.ajax({
-				url: 'dealer_index.php',
-				type: 'POST',
-				data: test='text',
-				//processData: false,
-				success: function(response) {
-					window.location.href = 'dealer_index.php';
-					alert('success');
-				}
-
-			});
-			//window.location.href = 'dealer_index.php';
-			/*jQuery.ajax({
-				url: 'dealer_index.php',
-				type: 'POST',
-				data: {
-					loginName: name
-				},
-				error: function(xhr) {
-					alert('Something is wrong');
-				},
-				success: function(response) {
-					window.location.href = 'dealer_index.php';
-				}
-			});
-
-		}*/
-	</script>
 	<style>
 		a:active {
 			background-color: #a9c4f5;
@@ -148,9 +117,8 @@
 						mysqli_close($conn);
 						session_start();
 						session_unset();
-						$_SESSION['loginName']=$loginName;
+						$_SESSION['loginName'] = $loginName;
 						header("Location:dealer_index.php");
-						//echo "<script> dealerLogin($loginName);</script>";
 					} else {
 						mysqli_free_result($rs);
 						mysqli_close($conn);
@@ -175,10 +143,8 @@
 						mysqli_close($conn);
 						session_start();
 						session_unset();
-						$_SESSION['loginName']=$loginName;
+						$_SESSION['loginName'] = $loginName;
 						header("Location:admin_index.php");
-						//echo "<script> dealerLogin('$loginName');</script>";
-						//header("Location:admin_index.html");
 					} else {
 						mysqli_free_result($rs);
 						mysqli_close($conn);
@@ -202,7 +168,7 @@
 			<input type="text" name="loginName" placeholder="DealerID or Email" value="%s">
 	<input type="password" name="pwd" placeholder="Password" id="pwd">
 	<div id="divRemember"><input type="checkbox" id="remember" name="remember" %s> Remember Me </div>
-	<div id="divCreate"><a href="create_account.html">Create Account</a></div>
+	<div id="divCreate"><a href="create_account.php">Create Account</a></div>
 	<div id="divSubmit"><input type="submit" value="Login" id="login" class="whiteButton">
 		<br />
 		<a href="admin_index.php">Admin Login</a>
