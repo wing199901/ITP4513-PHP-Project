@@ -63,11 +63,34 @@
     </style>
     <script>
         function setColor(n, id) {
+
             if (n == true)
                 document.getElementById(id).style.backgroundColor = "#ddd";
             else
                 document.getElementById(id).style.backgroundColor = "white";
 
+        }
+
+        function InputFieldValidations(theForm) {
+
+            if (theForm.partName.value == "") {
+                alert("Please Enter the Part Name.");
+                theForm.partName.focus();
+                return (false);
+            }
+
+            if (theForm.qty.value == "") {
+                alert("Please Enter the Part Quantity.");
+                theForm.qty.focus();
+                return (false);
+            }
+
+            if (theForm.price.value == "") {
+                alert("Please Enter the Part Price.");
+                theForm.price.focus();
+                return (false);
+            }
+            return true;
         }
     </script>
 </head>
@@ -84,7 +107,7 @@
         <li><a href="index.php" onclick="return confirm('Are you sure you want to sign out?')">Log Out</a></li>
     </ul>
     <div id="main">
-        <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+        <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" onsubmit="return InputFieldValidations(this)">
             <table align="center">
 
                 <?php
@@ -133,9 +156,9 @@
                             <td><input type="text" name="price" value="<?php echo $rc['stockPrice']; ?>"></td>
                         </tr>
                     <?php }
-                    mysqli_free_result($rs);
-                    mysqli_close($conn);
-                } ?>
+                }
+                mysqli_free_result($rs);
+                mysqli_close($conn); ?>
             </table>
             <div id="divButton">
                 <input type="submit" class="whiteButton" name="edit" id="edit" value="Update">

@@ -61,7 +61,7 @@
     <div>
         <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
             <div id="headerButton">
-                <input class="whiteButton" type="button" name="add" id="add" value="+Add" onclick="window.location.href='part_add.html'">
+                <input class="whiteButton" type="button" name="add" id="add" value="+Add" onclick="window.location.href='part_add.php'">
                 <input type="text" placeholder="Search Part" name="search" id="search">
                 <button type="submit" name="submit"><i class="fa fa-search"></i></button><br><br>
 
@@ -127,7 +127,9 @@
                             </td>
                         </tr>
                     <?php }
-                } ?>
+                }
+                mysqli_free_result($rs);
+                mysqli_close($conn); ?>
             </table>
             <br>
         </form>
