@@ -84,8 +84,8 @@ CREATE TABLE `OrderPart` (
   `price` decimal(10,2) NOT NULL,
   KEY `FKOrderPart106296` (`orderID`),
   KEY `FKOrderPart737123` (`partNumber`),
-  CONSTRAINT `FKOrderPart106296` FOREIGN KEY (`orderID`) REFERENCES `orders` (`orderID`),
-  CONSTRAINT `FKOrderPart737123` FOREIGN KEY (`partNumber`) REFERENCES `part` (`partNumber`)
+  CONSTRAINT `FKOrderPart106296` FOREIGN KEY (`orderID`) REFERENCES `Orders` (`orderID`),
+  CONSTRAINT `FKOrderPart737123` FOREIGN KEY (`partNumber`) REFERENCES `Part` (`partNumber`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -145,7 +145,7 @@ CREATE TABLE `Part` (
   PRIMARY KEY (`partNumber`),
   UNIQUE KEY `partName` (`partName`),
   KEY `FKPart451022` (`email`),
-  CONSTRAINT `FKPart451022` FOREIGN KEY (`email`) REFERENCES `administrator` (`email`)
+  CONSTRAINT `FKPart451022` FOREIGN KEY (`email`) REFERENCES `Administrator` (`email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=100003 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
