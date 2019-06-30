@@ -182,7 +182,7 @@
         } else if (status == "Delivery") {
             if (confirm('Are you sure you received those item(s)?')) {
                 $.ajax({
-                    url: 'delivery.php',
+                    url: 'receive.php',
                     type: 'GET',
                     data: {
                         orderID: receiveID
