@@ -193,7 +193,7 @@
                         //alert("Status change to Delivery successfully");
                     },
                     success: function(data) {
-                        alert("Status change to Delivery successfully");
+                        alert("Status change to Completed successfully");
                         document.location.reload();
                     }
                 });
