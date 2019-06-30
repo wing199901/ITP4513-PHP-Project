@@ -127,13 +127,15 @@
                         <td><?php echo $rc['name'] ?></td>
                         <td><?php echo $rc['orderDate'] ?></td>
                         <td><?php echo $rc['deliveryAddress'] ?></td>
-                        <td><?php $sql = "SELECT price FROM OrderPart WHERE orderID = $$rc[orderID]";
-                            $result = mysqli_query($conn, $sql);
-                            while ($row = mysqli_fetch_assoc($result)) {
-                                echo $row['partName'];
-                            }
-                            //mysqli_free_result($result); 
-                            ?></td>
+                        <td>$<?php $sql = "SELECT price FROM OrderPart WHERE orderID = $rc[orderID]";
+                                $result = mysqli_query($conn, $sql);
+                                $totalAmount = null;
+                                while ($row = mysqli_fetch_assoc($result)) {
+                                    $totalAmount += $row['price'];
+                                }
+                                echo $totalAmount;
+                                //mysqli_free_result($result); 
+                                ?></td>
                         <td><?php echo $status ?></td>
                         <td><input class="grayButton" type="button" name="detail" value="Items" onclick="show('<?php echo $rc['orderID'] ?>');">
                             <button class="grayButton delivery">Ready to delivery</button>
