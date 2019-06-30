@@ -10,6 +10,8 @@
     <link href="css/button.css" rel="stylesheet" type="text/css" />
     <link href="css/all.css" rel="stylesheet" type="text/css" />
 
+    <script src="js/jquery.min.js"></script>
+
     <style>
         table {
             width: 99%;
@@ -36,6 +38,14 @@
         .hideItems {
             display: none;
             background-color: #ccc;
+        }
+
+        .delivery,
+        .cancel {
+            padding: 12px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
         }
     </style>
 
@@ -117,11 +127,17 @@
                         <td><?php echo $rc['name'] ?></td>
                         <td><?php echo $rc['orderDate'] ?></td>
                         <td><?php echo $rc['deliveryAddress'] ?></td>
-                        <td>$200</td>
+                        <td><?php $sql = "SELECT price FROM OrderPart WHERE orderID = $$rc[orderID]";
+                            $result = mysqli_query($conn, $sql);
+                            while ($row = mysqli_fetch_assoc($result)) {
+                                echo $row['partName'];
+                            }
+                            //mysqli_free_result($result); 
+                            ?></td>
                         <td><?php echo $status ?></td>
                         <td><input class="grayButton" type="button" name="detail" value="Items" onclick="show('<?php echo $rc['orderID'] ?>');">
-                            <input class="grayButton" type="button" name="delivered" value="Ready to delivery" onclick="return confirm('Are you sure this order is ready to delivery?')">
-                            <input class="grayButton" type="button" name="cancel" value="Cancel" onclick="return confirm('Are you sure you want to cancel this order?')">
+                            <button class="grayButton delivery">Ready to delivery</button>
+                            <button class="grayButton cancel"> Cancel</button>
                         </td>
                     </tr>
                     <?php
@@ -129,7 +145,8 @@
                     $rs_hide = mysqli_query($conn, $sql);
 
                     while ($rc_hide = mysqli_fetch_assoc($rs_hide)) {
-                        ?><tr class="hideItems <?php echo $rc['orderID'] ?>">
+                        ?>
+                        <tr class="hideItems <?php echo $rc['orderID'] ?>">
                             <td colspan="2">Part Number: <?php echo $rc_hide['partNumber'] ?></td>
                             <td colspan="2">Part Name: <?php $sql = "SELECT partName FROM Part WHERE partNumber = $rc_hide[partNumber]";
                                                         $result = mysqli_query($conn, $sql);
@@ -152,5 +169,47 @@
         </form>
     </div>
 </body>
+<script type="text/javascript">
+    $(".delivery").click(function() {
+        var deliveryID = $(this).parents("tr").attr("id");
+        if (confirm('Are you sure this order is ready to delivery?')) {
+            $.ajax({
+                url: 'delivery.php',
+                type: 'GET',
+                data: {
+                    orderID: deliveryID
+                },
+                error: function() {
+                    alert('Something is wrong');
+                },
+                success: function(data) {
+                    alert("Status change to Delivery successfully");
+                    document.location.reload();
+                }
+            });
+        }
+    });
+</script>
+<script type="text/javascript">
+    $(".cancel").click(function() {
+        var cancelID = $(this).parents("tr").attr("id");
+        if (confirm('Are you sure you want to cancel this order?')) {
+            $.ajax({
+                url: 'cancel.php',
+                type: 'GET',
+                data: {
+                    orderID: cancelID
+                },
+                error: function() {
+                    alert('Something is wrong');
+                },
+                success: function(data) {
+                    alert("Status change to Canceled successfully");
+                    document.location.reload();
+                }
+            });
+        }
+    });
+</script>
 
 </html>
