@@ -181,7 +181,7 @@
         } else if (status == "Delivery") {
             alert("This order already Delivered!");
         } 
-        else if (status == "Cancel") {
+        else if (status == "Canceled") {
             alert("This order has been already Canceled!");
         }
         else if (status == "In processing"){
