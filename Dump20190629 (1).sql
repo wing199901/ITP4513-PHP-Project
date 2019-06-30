@@ -114,7 +114,7 @@ CREATE TABLE `Orders` (
   `status` int(1) NOT NULL,
   PRIMARY KEY (`orderID`),
   KEY `FKOrders795865` (`dealerID`),
-  CONSTRAINT `FKOrders795865` FOREIGN KEY (`dealerID`) REFERENCES `dealer` (`dealerID`)
+  CONSTRAINT `FKOrders795865` FOREIGN KEY (`dealerID`) REFERENCES `Dealer` (`dealerID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=100002 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

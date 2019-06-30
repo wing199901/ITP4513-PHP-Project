@@ -74,41 +74,55 @@
         </li>
     </ul>
     <br>
-    <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+    <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" onsubmit="return confirm('Are you sure you want to place order?');">
         <div>
             <table align="center" id="myTable">
-            <thead><tr>
-            <th>Part Number</th>
-            <th>Email</th>
-            <th>Part Name</th>
-            <th>Quantity</th>
-            <th>Price</th>
-            <th>Status</th>
-            <th>Purchase</th>
-            </tr>
-            </thead>
-            <tbody> 
+                <thead>
+                    <tr>
+                        <th>Part Number</th>
+                        <th>Email</th>
+                        <th>Part Name</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Status</th>
+                        <th>Purchase</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    session_start();
+                    $dealerID = $_SESSION['loginName'];
+                    require_once('conn.php');
+                    $sql = "SELECT * FROM Dealer WHERE dealerID='$dealerID'";
+                    $rs = mysqli_query($conn, $sql);
+                    $rc = mysqli_fetch_assoc($rs);
+                    $address = $rc['address'];
+                    $sql = "SELECT * FROM Part WHERE stockStatus = 1 AND stockQuantity > 0 ";
+                    $rs = mysqli_query($conn, $sql);
 
-    <?php
+                    if (isset($_POST['submit'])) {
+                        $currentDate=date("Y-m-d");
+                        $sql = "INSERT INTO Orders values(100002,'$dealerID',$currentDate,$_POST[address],1";
+                        mysqli_query($conn, $sql) or die($conn);
+                        $confirm_message = "Thank you for your order.\\nPurchasing List:\\n";
+                        $itemsCount = 0;
+                        while ($rc = mysqli_fetch_assoc($rs)) {
+                            if ($_POST[$rc['partNumber']] != "") {
+                                $confirm_message .= "Part Number:\t$rc[partName]\t";
+                                $tmp = "$rc[partNumber]";
+                                $confirm_message .= "Quantity:\t$_POST[$tmp]\\n";
+                                $itemsCount++;
+                            }
+                        }
+                        if ($itemsCount == 0) {
+                            echo "<script>alert('Your purchasing list is empty.');window.location.href='make_order.php';</script>";
+                         } else {
+                            echo "<script>alert('$confirm_message');window.location.href='make_order.php';</script>";
+                        }
+                        //echo $confirm_message;
+                    }
 
-    require_once('conn.php');
-    $sql = "SELECT * FROM Part WHERE stockStatus = 1 AND stockQuantity > 0 ";
-    $rs = mysqli_query($conn, $sql);
-
-    if (isset($_POST['submit'])) {
-        $confirm_message = "";
-        while ($rc = mysqli_fetch_assoc($rs)) {
-            if ($_POST[$rc['partNumber']] != "") {
-                $confirm_message .= "$rc[partName]:\t";
-              $tmp = "$rc[partNumber]";
-                $confirm_message .= "$_POST[$tmp]\n";
-                echo $confirm_message;
-                //echo "<script>alert('$confirm_message');</script>";
-            }
-        }
-    } else {
-
-       /* $form = <<<EOD
+                        /* $form = <<<EOD
         <form method="POST" action="$_SERVER[PHP_SELF]">
         <div>
             <table align="center" id="myTable">
@@ -124,35 +138,37 @@
             </thead>
             <tbody>            
 EOD;*/
-        while ($rc = mysqli_fetch_assoc($rs)) {
-            $form = "<tr>
-            <td>$rc[partNumber]</td>
-            <td>$rc[email]</td>
-            <td>$rc[partName]</td>
-            <td>$rc[stockQuantity]</td>
-            <td>$rc[stockPrice]</td>
-            <td>Status</td>
-            <td><input type='text' name='$rc[partNumber]' id='$rc[partNumber]'></td>
-            </tr>";
-            echo $form;
-        }
-       /* $form .= '</tbody></table></div><br>
+                        while ($rc = mysqli_fetch_assoc($rs)) {
+                            $form = "<tr>
+                            <td>$rc[partNumber]</td>
+                            <td>$rc[email]</td>
+                            <td>$rc[partName]</td>
+                            <td>$rc[stockQuantity]</td>
+                            <td>$rc[stockPrice]</td>
+                            <td>Status</td>
+                            <td><input type='text' name='$rc[partNumber]' id='$rc[partNumber]' pattern='^[0-9]*$' title='please enter the quantity of part'></td>
+                            </tr>";
+                            echo $form;
+                        }
+                        /* $form .= '</tbody></table></div><br>
         <div class=\'submit\'>Delivery Address:<input type=\'text\' name=\'Address\' value=\'My address\'>&emsp;
         <input class=\'whiteButton\' type=\'submit\' name=\'submit\' '."onclick='return alert('Are you sure you want to place order?');'>".'&emsp;
         <input class=\'whiteButton\' type=\'reset\'></div>
         </form>';*/
-        
 
-        mysqli_free_result($rs);
-        mysqli_close($conn);
-    }
-    ?>
-    </tbody></table></div><br>
-        <div class='submit'>Delivery Address:<input type='text' name='Address' value='My address'>&emsp;
-        <input class='whiteButton' type='submit' name='submit' onclick="return confirm('Are you sure you want to place order?');">&emsp;
-        <input class='whiteButton' type='reset'></div>
-        </form>
-   <!-- <script>
+
+                        mysqli_free_result($rs);
+                        mysqli_close($conn);
+                    
+                    ?>
+                </tbody>
+            </table>
+        </div><br>
+        <div class='submit'>Delivery Address:<input type='text' name='address' value='<?php echo htmlspecialchars("$address"); ?>'>&emsp;
+            <input class='whiteButton' type='submit' name='submit'>&emsp;
+            <input class='whiteButton' type='reset'></div>
+    </form>
+    <!-- <script>
         function validateForm() {
             alert("By ticking this box you agree that you have clearly read this document according to our terms and conditions and agree to digitally sign the document.");
             var sql = "//<?php //echo $sql; 
