@@ -180,11 +180,9 @@
             alert("This order already completed!");
         } else if (status == "Delivery") {
             alert("This order already Delivered!");
-        } 
-        else if (status == "Canceled") {
+        } else if (status == "Canceled") {
             alert("This order has been already Canceled!");
-        }
-        else if (status == "In processing"){
+        } else if (status == "In processing") {
             if (confirm('Are you sure this order is ready to delivery?')) {
                 $.ajax({
                     url: 'delivery.php',
