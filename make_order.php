@@ -99,29 +99,39 @@
                     $address = $rc['address'];
                     $sql = "SELECT * FROM Part WHERE stockStatus = 1 AND stockQuantity > 0 ";
                     $rs = mysqli_query($conn, $sql);
-
                     if (isset($_POST['submit'])) {
-                        $sql = "INSERT INTO Orders (dealerID,orderDate,deliveryAddress, status) values('$dealerID',curdate(),'$_POST[address]',1)";
-                        mysqli_query($conn, $sql) or die($conn);
-                        $sql = "SELECT max(orderID) AS max_orderID from Orders where dealerID='$dealerID'";
-                        $rs = mysqli_query($conn, $sql) or die($conn);
-                        $orderID = mysqli_fetch_assoc($rs)['max_orderID'];
-                        $sql = "SELECT * FROM Part WHERE stockStatus = 1 AND stockQuantity > 0 ";
-                        $rs = mysqli_query($conn, $sql) or die($conn);
-                        $confirm_message = "Thank you for your order.\\nOrderID:\t$orderID\\nPurchasing List:\\n";
+                        $confirm_message = "Thank you for your order\\nOrderID: %s\\nDelivery Address: $_POST[address]\\nPurchasing List:\\n";
                         $itemsCount = 0;
+                        $totalAmount = 0;
+                        $sql_items = "INSERT INTO OrderPart VALUES";
                         while ($rc = mysqli_fetch_assoc($rs)) {
                             if ($_POST[$rc['partNumber']] != "") {
-                                $confirm_message .= "Part Name:\t$rc[partName]\t";
+                                if($_POST[$rc['partNumber']]>$rc['stockQuantity']){
+                                    echo "<script>alert('Your purchasing quantity of $rc[partName] is over our stock.');window.location.href='make_order.php';</script>";
+                                }
+                                $confirm_message .= "Item: $rc[partName] ";
                                 $tmp = "$rc[partNumber]";
-                                $confirm_message .= "x$_POST[$tmp]\\n";
-                                $itemsCount++;
+                                $confirm_message .= "x $_POST[$tmp]\\n";
+                                if ($itemsCount++ == 0) {
+                                    $sql_items .= "(%1\$s,$rc[partNumber],$_POST[$tmp],".$rc['stockPrice']*$_POST[$tmp].")";
+                                } else {
+                                    $sql_items .= ",(%1\$s,$rc[partNumber],$_POST[$tmp],".$rc['stockPrice']*$_POST[$tmp].")";
+                                }
+                                $totalAmount+=$rc['stockPrice']*$_POST[$tmp];
                             }
                         }
                         if ($itemsCount == 0) {
                             echo "<script>alert('Your purchasing list is empty.');window.location.href='make_order.php';</script>";
                         } else {
-                            echo "<script>alert('$confirm_message');window.location.href='make_order.php';</script>";
+                            $sql = "INSERT INTO Orders (dealerID,orderDate,deliveryAddress, status) values('$dealerID',curdate(),'$_POST[address]',1)";
+                            mysqli_query($conn, $sql) or die($conn);
+                            $sql = "SELECT max(orderID) AS max_orderID from Orders where dealerID='$dealerID'";
+                            $rs = mysqli_query($conn, $sql) or die($conn);
+                            $orderID = mysqli_fetch_assoc($rs)['max_orderID'];
+                            $confirm_message.="Total amount: $$totalAmount";
+                            $sql_items=sprintf($sql_items,$orderID);
+                            mysqli_query($conn, $sql_items) or die($conn);
+                            printf("<script>alert('$confirm_message');window.location.href='make_order.php';</script>",$orderID);
                         }
                     }
                     while ($rc = mysqli_fetch_assoc($rs)) {
