@@ -170,10 +170,6 @@
 	<div id="divRemember"><input type="checkbox" id="remember" name="remember" %s> Remember Me </div>
 	<div id="divCreate"><a href="create_account.php">Create Account</a></div>
 	<div id="divSubmit"><input type="submit" value="Login" id="login" class="whiteButton">
-		<br />
-		<a href="admin_index.php">Admin Login</a>
-		<a href="dealer_index.php">Dealer Login</a></div>
-	<br /><br />
 	</form>
 	</div>
 EOD;
