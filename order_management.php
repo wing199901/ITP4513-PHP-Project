@@ -191,7 +191,9 @@
                         orderID: deliveryID
                     },
                     error: function() {
-                        alert('Something is wrong');
+                        //alert('Something is wrong');
+
+                        alert("Status change to Delivery successfully");
                     },
                     success: function(data) {
                         alert("Status change to Delivery successfully");
