@@ -31,9 +31,11 @@
 
         thead {
             display: block;
+            width: auto;
         }
 
         tbody {
+            width: auto;
             height: 400px;
             overflow-y: scroll;
             display: block;
