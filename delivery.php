@@ -13,6 +13,8 @@ if (isset($_GET['orderID'])) {
         $sql="UPDATE Part SET stockQuantity = StockQuantity - $rc[quantity] WHERE partNumber = $rc[partNumber]";
         mysqli_query($conn, $sql);
     }
+
+    mysqli_free_result($rs);
     mysqli_close($conn);
-    echo 'Delivered successfully.';
+    echo 'Delivery successfully.';
 }
