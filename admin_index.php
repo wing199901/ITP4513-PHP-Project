@@ -23,6 +23,9 @@
   </ul>
   <?php
   session_start();
+  if (empty($_SESSION['loginName'])) {
+    echo "<script>alert('Please login again');window.location.href='index.php';";
+  }
   $email = $_SESSION['loginName'];
   require_once('conn.php');
   $sql = "SELECT firstName,lastName FROM Administrator where email = '$email'";
