@@ -136,7 +136,7 @@
                                 echo $totalAmount;
                                 //mysqli_free_result($result); 
                                 ?></td>
-                        <td><?php echo $status ?></td>
+                        <td id="<?php echo $status ?>"><?php echo $status ?></td>
                         <td><input class="grayButton" type="button" name="detail" value="Items" onclick="show('<?php echo $rc['orderID'] ?>');">
                             <button class="grayButton delivery">Ready to delivery</button>
                             <button class="grayButton cancel"> Cancel</button>
@@ -174,42 +174,59 @@
 <script type="text/javascript">
     $(".delivery").click(function() {
         var deliveryID = $(this).parents("tr").attr("id");
-        if (confirm('Are you sure this order is ready to delivery?')) {
-            $.ajax({
-                url: 'delivery.php',
-                type: 'GET',
-                data: {
-                    orderID: deliveryID
-                },
-                error: function() {
-                    alert('Something is wrong');
-                },
-                success: function(data) {
-                    alert("Status change to Delivery successfully");
-                    document.location.reload();
-                }
-            });
+
+        var status = document.getElementById(deliveryID).cells[6].innerHTML;
+        if (status == "Completed") {
+            alert("This order already completed!");
+        } else if (status == "Delivery") {
+            alert("This order already Delivered!");
+        } else {
+            if (confirm('Are you sure this order is ready to delivery?')) {
+                $.ajax({
+                    url: 'delivery.php',
+                    type: 'GET',
+                    data: {
+                        orderID: deliveryID
+                    },
+                    error: function() {
+                        alert('Something is wrong');
+                    },
+                    success: function(data) {
+                        alert("Status change to Delivery successfully");
+                        document.location.reload();
+                    }
+                });
+            }
         }
     });
 </script>
 <script type="text/javascript">
     $(".cancel").click(function() {
         var cancelID = $(this).parents("tr").attr("id");
-        if (confirm('Are you sure you want to cancel this order?')) {
-            $.ajax({
-                url: 'cancel.php',
-                type: 'GET',
-                data: {
-                    orderID: cancelID
-                },
-                error: function() {
-                    alert('Something is wrong');
-                },
-                success: function(data) {
-                    alert("Status change to Canceled successfully");
-                    document.location.reload();
-                }
-            });
+
+        var status = document.getElementById(cancelID).cells[6].innerHTML;
+        if (status == "Completed") {
+            alert("This order already completed!");
+        } else if (status == "Canceled") {
+            alert("This order already Canceled!");
+        } else {
+            var cancelID = $(this).parents("tr").attr("id");
+            if (confirm('Are you sure you want to cancel this order?')) {
+                $.ajax({
+                    url: 'cancel.php',
+                    type: 'GET',
+                    data: {
+                        orderID: cancelID
+                    },
+                    error: function() {
+                        alert('Something is wrong');
+                    },
+                    success: function(data) {
+                        alert("Status change to Canceled successfully");
+                        document.location.reload();
+                    }
+                });
+            }
         }
     });
 </script>
