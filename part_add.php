@@ -167,7 +167,7 @@
             </table>
             <div id="divButton">
                 <input type="submit" class="whiteButton" name="add" id="add" value="Add" onclick="return confirm('Are you sure you want to add part?')">
-                <input type="button" class="whiteButton" name="cancel" id="cancel" value="Cancel" onclick="window.location.href='part_info.html'">
+                <input type="button" class="whiteButton" name="cancel" id="cancel" value="Cancel" onclick="window.location.href='part_info.php'">
             </div>
         </form>
     </div>

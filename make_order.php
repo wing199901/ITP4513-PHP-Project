@@ -29,33 +29,31 @@
             float: inherit;
         }
 
-        thead {
-            display: block;
-            width: auto;
+        table {
+            table-layout: fixed;
+            border-collapse: collapse;
+
+        }
+
+        td {
+            word-wrap: break-word;
+        }
+
+        thead,
+        tbody tr {
+            display: table;
+            width: 850px;
+            table-layout: fixed;
+
         }
 
         tbody {
-            width: auto;
+            text-align: left;
             height: 400px;
             overflow-y: scroll;
             display: block;
         }
     </style>
-
-    <script type="text/javascript">
-        $(function() {
-            var colNumber = 7 //number of table columns
-
-            for (var i = 0; i < colNumber; i++) {
-                var thWidth = $("#myTable").find("th:eq(" + i + ")").width();
-                var tdWidth = $("#myTable").find("td:eq(" + i + ")").width();
-                if (thWidth < tdWidth)
-                    $("#myTable").find("th:eq(" + i + ")").width(tdWidth);
-                else
-                    $("#myTable").find("td:eq(" + i + ")").width(thWidth);
-            }
-        });
-    </script>
 </head>
 
 <body class="font">
@@ -81,13 +79,13 @@
             <table align="center" id="myTable">
                 <thead>
                     <tr>
-                        <th>Part Number</th>
-                        <th>Email</th>
-                        <th>Part Name</th>
-                        <th>Quantity</th>
-                        <th>Price</th>
-                        <th>Status</th>
-                        <th>Purchase</th>
+                        <th style="width: 110px;">Part Number</th>
+                        <th style="width: 150px;">Email</th>
+                        <th style="width: 90px;">Part Name</th>
+                        <th style="width: 90px;">Quantity</th>
+                        <th style="width: 90px;">Price</th>
+                        <th style="width: 90px;">Status</th>
+                        <th style="width: 170px;">Purchase</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -108,18 +106,18 @@
                         $sql_items = "INSERT INTO OrderPart VALUES";
                         while ($rc = mysqli_fetch_assoc($rs)) {
                             if ($_POST[$rc['partNumber']] != "") {
-                                if($_POST[$rc['partNumber']]>$rc['stockQuantity']){
+                                if ($_POST[$rc['partNumber']] > $rc['stockQuantity']) {
                                     echo "<script>alert('Your purchasing quantity of $rc[partName] is over our stock.');window.location.href='make_order.php';</script>";
                                 }
                                 $confirm_message .= "Item: $rc[partName] ";
                                 $tmp = "$rc[partNumber]";
                                 $confirm_message .= "x $_POST[$tmp]\\n";
                                 if ($itemsCount++ == 0) {
-                                    $sql_items .= "(%1\$s,$rc[partNumber],$_POST[$tmp],".$rc['stockPrice']*$_POST[$tmp].")";
+                                    $sql_items .= "(%1\$s,$rc[partNumber],$_POST[$tmp]," . $rc['stockPrice'] * $_POST[$tmp] . ")";
                                 } else {
-                                    $sql_items .= ",(%1\$s,$rc[partNumber],$_POST[$tmp],".$rc['stockPrice']*$_POST[$tmp].")";
+                                    $sql_items .= ",(%1\$s,$rc[partNumber],$_POST[$tmp]," . $rc['stockPrice'] * $_POST[$tmp] . ")";
                                 }
-                                $totalAmount+=$rc['stockPrice']*$_POST[$tmp];
+                                $totalAmount += $rc['stockPrice'] * $_POST[$tmp];
                             }
                         }
                         if ($itemsCount == 0) {
@@ -130,21 +128,21 @@
                             $sql = "SELECT max(orderID) AS max_orderID from Orders where dealerID='$dealerID'";
                             $rs = mysqli_query($conn, $sql) or die($conn);
                             $orderID = mysqli_fetch_assoc($rs)['max_orderID'];
-                            $confirm_message.="Total amount: $$totalAmount";
-                            $sql_items=sprintf($sql_items,$orderID);
+                            $confirm_message .= "Total amount: $$totalAmount";
+                            $sql_items = sprintf($sql_items, $orderID);
                             mysqli_query($conn, $sql_items) or die($conn);
-                            printf("<script>alert('$confirm_message');window.location.href='make_order.php';</script>",$orderID);
+                            printf("<script>alert('$confirm_message');window.location.href='make_order.php';</script>", $orderID);
                         }
                     }
                     while ($rc = mysqli_fetch_assoc($rs)) {
                         $form = "<tr>
-                            <td>$rc[partNumber]</td>
-                            <td>$rc[email]</td>
-                            <td>$rc[partName]</td>
-                            <td>$rc[stockQuantity]</td>
-                            <td>$rc[stockPrice]</td>
-                            <td>Status</td>
-                            <td><input type='text' name='$rc[partNumber]' id='$rc[partNumber]' pattern='^[0-9]*$' title='please enter the quantity of part'></td>
+                            <td style='width: 110px;'>$rc[partNumber]</td>
+                            <td style='width: 150px;'>$rc[email]</td>
+                            <td style='width: 90px;'>$rc[partName]</td>
+                            <td style='width: 90px;'>$rc[stockQuantity]</td>
+                            <td style='width: 90px;'>$rc[stockPrice]</td>
+                            <td style='width: 90px;'>Status</td>
+                            <td style='width: 170px;'><input type='text' name='$rc[partNumber]' id='$rc[partNumber]' pattern='^[0-9]*$' title='please enter the quantity of part'></td>
                             </tr>";
                         echo $form;
                     }
