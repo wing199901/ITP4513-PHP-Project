@@ -160,7 +160,7 @@
             </table>
             <div id="divButton">
                 <input type="submit" class="whiteButton" name="edit" id="edit" value="Update">
-                <input type="button" class="whiteButton" name="cancel" id="cancel" value="Cancel" onclick="window.location.href='part_info.html'">
+                <input type="button" class="whiteButton" name="cancel" id="cancel" value="Cancel" onclick="window.location.href='part_info.php'">
             </div>
         </form>
     </div>
