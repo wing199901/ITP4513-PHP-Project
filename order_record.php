@@ -154,8 +154,8 @@
                                                         }
                                                         //mysqli_free_result($result); 
                                                         ?></td>
-                            <td colspan="2">Quantity: <?php echo $rc_hide['quantity'] ?></td>
-                            <td colspan="2">Price: $<?php echo $rc_hide['price'] ?></td>
+                            <td>Quantity: <?php echo $rc_hide['quantity'] ?></td>
+                            <td>Price: $<?php echo $rc_hide['price'] ?></td>
                         </tr>
                     <?php
                     }
