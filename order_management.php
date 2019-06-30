@@ -214,7 +214,6 @@
         } else if (status == "Canceled") {
             alert("This order already Canceled!");
         } else {
-            var cancelID = $(this).parents("tr").attr("id");
             if (confirm('Are you sure you want to cancel this order?')) {
                 $.ajax({
                     url: 'cancel.php',
