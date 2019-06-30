@@ -39,7 +39,7 @@ CREATE TABLE `Administrator` (
 
 LOCK TABLES `Administrator` WRITE;
 /*!40000 ALTER TABLE `Administrator` DISABLE KEYS */;
-INSERT INTO `Administrator` VALUES ('lwl@IVE.com','Peter','Pan','000000');
+INSERT INTO `Administrator` VALUES ('lwl@ive.com','Peter','Pan','000000');
 /*!40000 ALTER TABLE `Administrator` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -155,7 +155,7 @@ CREATE TABLE `Part` (
 
 LOCK TABLES `Part` WRITE;
 /*!40000 ALTER TABLE `Part` DISABLE KEYS */;
-INSERT INTO `Part` VALUES (100001,'lwl@ive.com','part01',500,20.00,1),(100002,'lwl@ive.com','part02',10000,5.00,0);
+INSERT INTO `Part` VALUES (100001,'lwl@ive.com','part01',500,20.00,1),(100002,'lwl@ive.com','part02',10000,5.00,1);
 /*!40000 ALTER TABLE `Part` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
