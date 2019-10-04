@@ -111,14 +111,14 @@
 
                 <?php
                 session_start();
-                $email = $_SESSION['loginName'];
+                $email = $_SESSION['loginName'];//get id 
 
                 if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     require_once('conn.php');
                     $name = $_POST['partName'];
                     $sql = "INSERT INTO Part(email, partName, stockQuantity, stockPrice, stockStatus) VALUES('$email', '$_POST[partName]', $_POST[qty], $_POST[price], 1)";
 
-                    if (mysqli_query($conn, $sql)) {
+                    if (mysqli_query($conn, $sql)) {//update record
                         echo "<script>alert('Record was updated successfully.');</script>";
                         $sql = "SELECT * FROM Part WHERE partName = '$name'";
                         $rs = mysqli_query($conn, $sql);
@@ -142,7 +142,7 @@
                         }
                         mysqli_free_result($rs);
                         mysqli_close($conn);
-                        echo "<script>alert('Part Name was been used. Please try again');window.location.href='part_add.php';</script>";
+                        echo "<script>alert('Part Name was been used. Please try again');window.location.href='part_add.php';</script>";//part name is exists already
                     }
                 }
                 ?>

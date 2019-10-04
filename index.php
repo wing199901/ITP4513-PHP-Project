@@ -103,7 +103,7 @@
 					setcookie("loginName", "", time() - 60);
 				}
 			}
-			if (strstr($loginName, "@") == false) {
+			if (strstr($loginName, "@") == false) {//admin login
 				require_once('conn.php');
 				$sql = "SELECT dealerID FROM Dealer where dealerID = '$loginName'";
 				$rs = mysqli_query($conn, $sql);
@@ -112,7 +112,7 @@
 					$sql = sprintf("SELECT password FROM Dealer where dealerID = '%s'", $loginName);
 					$rs = mysqli_query($conn, $sql);
 					$rc = mysqli_fetch_assoc($rs);
-					if ($pwd == $rc['password']) {
+					if ($pwd == $rc['password']) {//check password
 						mysqli_free_result($rs);
 						mysqli_close($conn);
 						session_start();
@@ -129,7 +129,7 @@
 					mysqli_close($conn);
 					echo "<script>alert('Wrong username or password. Please try again');window.location.href='index.php';</script>";
 				}
-			} else { //here
+			} else { //dealer login
 				require_once('conn.php');
 				$sql = "SELECT email FROM Administrator where email = '$loginName'";
 				$rs = mysqli_query($conn, $sql);
@@ -138,7 +138,7 @@
 					$sql = sprintf("SELECT password FROM Administrator where email = '%s'", $loginName);
 					$rs = mysqli_query($conn, $sql);
 					$rc = mysqli_fetch_assoc($rs);
-					if ($pwd == $rc['password']) {
+					if ($pwd == $rc['password']) {//check password
 						mysqli_free_result($rs);
 						mysqli_close($conn);
 						session_start();

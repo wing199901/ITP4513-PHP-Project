@@ -115,9 +115,9 @@
         require_once('conn.php');
         $sql =  "select dealerID from Dealer where dealerID='$accountId'";
         $rs =  mysqli_query($conn, $sql);
-        if (mysqli_num_rows($rs) == 0) {
+        if (mysqli_num_rows($rs) == 0) {//checking dealerId is unique
             mysqli_free_result($rs);
-            if ($pwd == $confirmPwd) {
+            if ($pwd == $confirmPwd) {//comfirm password
                 $sql = "INSERT INTO Dealer VALUES ('$accountId','$pwd','$name','$tel','$address')";
                 mysqli_query($conn, $sql);
                 mysqli_close($conn);
@@ -138,7 +138,7 @@
         <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
             <h2>Create your Dealer Account</h2>
             <p>Account ID</p>
-            <input type="text" name="accountId" id="accountId" pattern="^[1-9A-Za-z.]{8,}$" title="You can use letters, number&periods at least 8 charchers." required>
+            <input type="text" name="accountId" id="accountId" pattern="^[0-9A-Za-z.]{8,}$" title="You can use letters, number&periods at least 8 charchers." required>//limited format 
             <p name="hint">You can use letters, number&periods at least 8 charchers</p>
             <li class="left">Your Name</li>
             <li class="right">Phone Number</li><br /><br />

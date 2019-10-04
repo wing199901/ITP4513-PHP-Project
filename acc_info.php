@@ -80,11 +80,12 @@
     <div id="main">
         <?php
         session_start();
-        $dealerID = $_SESSION['loginName'];
+        $dealerID = $_SESSION['loginName'];//get dealerID
         require_once('conn.php');
         $sql = "select * from Dealer where dealerID='$dealerID'";
         $rs = mysqli_query($conn, $sql);
         $rc = mysqli_fetch_assoc($rs);
+        //main form
         $form = <<<EOD
         <form method="POST" action="$_SERVER[PHP_SELF]" onsubmit="return confirm('Are you sure to update your personal information?')"  >
             <table align="center">
@@ -119,11 +120,11 @@
             <input type="submit" class="whiteButton" name="update" id="update" value="Update" ">
         </form>
 EOD;
-        printf($form, $dealerID, $rc['name'], $rc['phoneNumber'], $rc['address']);
+        printf($form, $dealerID, $rc['name'], $rc['phoneNumber'], $rc['address']);//insert from info 
         if (isset($_POST['update'])) {
             extract($_POST);
             $sql = "update Dealer set name='$name',  phoneNumber='$tel', address='$address'";
-            if (!empty($password) && !empty($rePassword)) {
+            if (!empty($password) && !empty($rePassword)) {//check password validity
                 if ($password != $rePassword)
                     echo "<script>alert('Those passwords didn\'t match. Try again.');window.location.href='acc_info.php';</script>";
                 $sql .= ",password='$password'";

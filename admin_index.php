@@ -26,12 +26,12 @@
   if (empty($_SESSION['loginName'])) {
     echo "<script>alert('Please login again');window.location.href='index.php';";
   }
-  $email = $_SESSION['loginName'];
+  $email = $_SESSION['loginName'];//get email
   require_once('conn.php');
   $sql = "SELECT firstName,lastName FROM Administrator where email = '$email'";
   $rs = mysqli_query($conn, $sql);
   $rc = mysqli_fetch_assoc($rs);
-  printf("<h1 style='text-align: center;font-size: 50px;margin-top:200px;color: grey;'>Welcome %s</h1>", $rc['firstName'] . " " . $rc['lastName']);
+  printf("<h1 style='text-align: center;font-size: 50px;margin-top:200px;color: grey;'>Welcome %s</h1>", $rc['firstName'] . " " . $rc['lastName']);//display welcome message
   mysqli_free_result($rs);
   mysqli_close($conn);
   ?>

@@ -113,7 +113,7 @@
                 <?php
                 require_once('conn.php');
                 session_start();
-                $email = $_SESSION['loginName'];
+                $email = $_SESSION['loginName'];//get id
 
                 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 

@@ -91,22 +91,22 @@
                 <tbody>
                     <?php
                     session_start();
-                    $dealerID = $_SESSION['loginName'];
+                    $dealerID = $_SESSION['loginName'];//get dealer id
                     require_once('conn.php');
                     $sql = "SELECT * FROM Dealer WHERE dealerID='$dealerID'";
                     $rs = mysqli_query($conn, $sql);
                     $rc = mysqli_fetch_assoc($rs);
                     $address = $rc['address'];
-                    $sql = "SELECT * FROM Part WHERE stockStatus = 1 AND stockQuantity > 0 ";
+                    $sql = "SELECT * FROM Part WHERE stockStatus = 1 AND stockQuantity > 0 ";//show the product which its stock over 0 and status is 1 thay mean it is available
                     $rs = mysqli_query($conn, $sql);
                     if (isset($_POST['submit'])) {
-                        $confirm_message = "Thank you for your order\\nOrderID: %s\\nDelivery Address: $_POST[address]\\nPurchasing List:\\n";
+                        $confirm_message = "Thank you for your order\\nOrderID: %s\\nDelivery Address: $_POST[address]\\nPurchasing List:\\n";//result format
                         $itemsCount = 0;
                         $totalAmount = 0;
                         $sql_items = "INSERT INTO OrderPart VALUES";
                         while ($rc = mysqli_fetch_assoc($rs)) {
                             if ($_POST[$rc['partNumber']] != "") {
-                                if ($_POST[$rc['partNumber']] > $rc['stockQuantity']) {
+                                if ($_POST[$rc['partNumber']] > $rc['stockQuantity']) {//check quantity
                                     echo "<script>alert('Your purchasing quantity of $rc[partName] is over our stock.');window.location.href='make_order.php';</script>";
                                 }
                                 $confirm_message .= "Item: $rc[partName] ";
@@ -122,7 +122,7 @@
                         }
                         if ($itemsCount == 0) {
                             echo "<script>alert('Your purchasing list is empty.');window.location.href='make_order.php';</script>";
-                        } else {
+                        } else {//make order
                             $sql = "INSERT INTO Orders (dealerID,orderDate,deliveryAddress, status) values('$dealerID',curdate(),'$_POST[address]',1)";
                             mysqli_query($conn, $sql) or die($conn);
                             $sql = "SELECT max(orderID) AS max_orderID from Orders where dealerID='$dealerID'";
@@ -134,14 +134,14 @@
                             printf("<script>alert('$confirm_message');window.location.href='make_order.php';</script>", $orderID);
                         }
                     }
-                    while ($rc = mysqli_fetch_assoc($rs)) {
+                    while ($rc = mysqli_fetch_assoc($rs)) {//show product list
                         $form = "<tr>
                             <td style='width: 110px;'>$rc[partNumber]</td>
                             <td style='width: 150px;'>$rc[email]</td>
                             <td style='width: 90px;'>$rc[partName]</td>
                             <td style='width: 90px;'>$rc[stockQuantity]</td>
                             <td style='width: 90px;'>$rc[stockPrice]</td>
-                            <td style='width: 90px;'>Status</td>
+                            <td style='width: 90px;'>Available</td>
                             <td style='width: 170px;'><input type='text' name='$rc[partNumber]' id='$rc[partNumber]' pattern='^[0-9]*$' title='please enter the quantity of part'></td>
                             </tr>";
                         echo $form;

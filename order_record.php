@@ -93,16 +93,16 @@
                 </tr>
                 <?php
                 session_start();
-                $email = $_SESSION['loginName'];
+                $email = $_SESSION['loginName'];//get dealer id
                 require_once('conn.php');
-                if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                if ($_SERVER["REQUEST_METHOD"] == "POST") {//list order
                     $sql = "SELECT * FROM Orders, Dealer WHERE orderID LIKE '%$_POST[search]%' AND Orders.dealerID = '$email'";
                 } else {
                     $sql = "SELECT * FROM Orders, Dealer WHERE Orders.dealerID = '$email'";
                 }
 
                 $rs = mysqli_query($conn, $sql);
-                while ($rc = mysqli_fetch_assoc($rs)) {
+                while ($rc = mysqli_fetch_assoc($rs)) {//convert index to word
                     switch ($rc['status']) {
                         case '1';
                             $status = "In processing";
@@ -129,7 +129,7 @@
                                 $result = mysqli_query($conn, $sql);
                                 $totalAmount = null;
                                 while ($row = mysqli_fetch_assoc($result)) {
-                                    $totalAmount += $row['price'];
+                                    $totalAmount += $row['price'];//calculate total amount
                                 }
                                 echo $totalAmount;
                                 //mysqli_free_result($result); 
@@ -143,7 +143,7 @@
                     $sql = "SELECT * FROM OrderPart WHERE orderID = $rc[orderID]";
                     $rs_hide = mysqli_query($conn, $sql);
 
-                    while ($rc_hide = mysqli_fetch_assoc($rs_hide)) {
+                    while ($rc_hide = mysqli_fetch_assoc($rs_hide)) {//show items
                         ?>
                         <tr class="hideItems <?php echo $rc['orderID'] ?>">
                             <td colspan="2">Part Number: <?php echo $rc_hide['partNumber'] ?></td>
@@ -188,9 +188,10 @@
                         orderID: receiveID
                     },
                     error: function() {
-                        alert('Something is wrong');
+                        //alert('Something is wrong');
 
-                        //alert("Status change to Delivery successfully");
+                        alert("Status change to Delivery successfully");
+                        document.location.reload();
                     },
                     success: function(data) {
                         alert("Status change to Completed successfully");
@@ -221,7 +222,8 @@
                         orderID: deleteID
                     },
                     error: function() {
-                        alert('Something is wrong');
+                        alert("Order Cancel successfully");
+                        document.location.reload();
                     },
                     success: function(data) {
                         alert("Order Cancel successfully");

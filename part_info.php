@@ -82,11 +82,12 @@
                     $rs = mysqli_query($conn, $sql);
                     while ($rc = mysqli_fetch_assoc($rs)) {
                         $status = "";
-                        if ($rc['stockStatus'] == '1') {
+                        if ($rc['stockStatus'] == '1') {//comvert index to word
                             $status = "Available";
                         } else {
                             $status = "Unavailable";
                         }
+                        //show part info match key word
                         echo "<tr id=' $rc[partNumber]'>
                                 <td><a>$rc[partNumber]</a></td>
                                 <td>$rc[partName]</td>
@@ -103,7 +104,7 @@
                     $sql = "SELECT * FROM Part";
                     $rs = mysqli_query($conn, $sql);
 
-                    while ($rc = mysqli_fetch_assoc($rs)) {
+                    while ($rc = mysqli_fetch_assoc($rs)) {//show all part infor
 
                         $status = "";
                         if ($rc['stockStatus'] == '1') {
@@ -136,7 +137,7 @@
 
 <script type="text/javascript">
     $(".remove").click(function() {
-        var id = $(this).parents("tr").attr("id");
+        var id = $(this).parents("tr").attr("id");//remove  product
         if (confirm('Are you sure to remove this part?')) {
             $.ajax({
                 url: 'remove.php',

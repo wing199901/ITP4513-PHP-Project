@@ -96,14 +96,14 @@
                 </tr>
                 <?php
                 require_once('conn.php');
-                if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                if ($_SERVER["REQUEST_METHOD"] == "POST") {//show order
                     $sql = "SELECT * FROM Orders, Dealer WHERE orderID LIKE '%$_POST[search]%'";
                 } else {
                     $sql = "SELECT * FROM Orders, Dealer";
                 }
 
                 $rs = mysqli_query($conn, $sql);
-                while ($rc = mysqli_fetch_assoc($rs)) {
+                while ($rc = mysqli_fetch_assoc($rs)) {//convert index to word
                     switch ($rc['status']) {
                         case '1';
                             $status = "In processing";
@@ -143,7 +143,7 @@
                         </td>
                     </tr>
                     <?php
-                    $sql = "SELECT * FROM OrderPart WHERE orderID = $rc[orderID]";
+                    $sql = "SELECT * FROM OrderPart WHERE orderID = $rc[orderID]";//list items of order
                     $rs_hide = mysqli_query($conn, $sql);
 
                     while ($rc_hide = mysqli_fetch_assoc($rs_hide)) {
@@ -183,7 +183,7 @@
         } else if (status == "Canceled") {
             alert("This order has been already Canceled!");
         } else if (status == "In processing") {
-            if (confirm('Are you sure this order is ready to delivery?')) {
+            if (confirm('Are you sure this order is ready to delivery?')) {//change order status to delivery
                 $.ajax({
                     url: 'delivery.php',
                     type: 'GET',
@@ -194,6 +194,7 @@
                         //alert('Something is wrong');
 
                         alert("Status change to Delivery successfully");
+                        document.location.reload();
                     },
                     success: function(data) {
                         alert("Status change to Delivery successfully");
@@ -222,7 +223,10 @@
                         orderID: cancelID
                     },
                     error: function() {
-                        alert('Something is wrong');
+                        //alert('Something is wrong');
+
+                        alert("Status change to Canceled successfully");
+                        document.location.reload();
                     },
                     success: function(data) {
                         alert("Status change to Canceled successfully");

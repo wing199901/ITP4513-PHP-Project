@@ -28,12 +28,12 @@
   // echo $_POST['loginName'];
   //}
   session_start();
-  $dealerID = $_SESSION['loginName'];
+  $dealerID = $_SESSION['loginName'];//get dealer id
   require_once('conn.php');
   $sql = "SELECT name FROM Dealer where dealerID = '$dealerID'";
   $rs = mysqli_query($conn, $sql);
   $rc = mysqli_fetch_assoc($rs);
-  printf("<h1 style='text-align: center;font-size: 50px;margin-top:200px;color: grey;'>Welcome %s</h1>",$rc['name']);
+  printf("<h1 style='text-align: center;font-size: 50px;margin-top:200px;color: grey;'>Welcome %s</h1>",$rc['name']);//welcome message
   mysqli_free_result($rs);
   mysqli_close($conn);
   ?>
