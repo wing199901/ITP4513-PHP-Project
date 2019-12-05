@@ -82,7 +82,7 @@
                     $rs = mysqli_query($conn, $sql);
                     while ($rc = mysqli_fetch_assoc($rs)) {
                         $status = "";
-                        if ($rc['stockStatus'] == '1') {//comvert index to word
+                        if ($rc['stockStatus'] == '1') {//convert index to word
                             $status = "Available";
                         } else {
                             $status = "Unavailable";
